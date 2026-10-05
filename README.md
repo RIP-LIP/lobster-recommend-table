@@ -4,7 +4,7 @@
 并用 [Lobotomy Corp 中文 wiki](https://lobotomycorp.fandom.com/zh/wiki/%E8%84%91%E5%8F%B6%E5%85%AC%E5%8F%B8_Wiki)
 的结构化数据补齐原表留空的字段。
 
-线上站点：<https://85muio9vujvqf.space.mcode.cn>
+线上站点：<https://lobotomy.space.mcode.cn>
 
 ## 数据来源
 
