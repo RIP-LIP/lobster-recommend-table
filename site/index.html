@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>脑叶公司 · 异想体推荐表 & 加班计算器</title>
+<meta name="description" content="异想体收录与工作推荐表，支持搜索与多维筛选；含员工工作属性加成估算器。">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"></div>
+      <div class="brand-text">
+        <h1>异想体推荐表 <span class="amp">&amp;</span> 加班计算器</h1>
+        <p class="sub" id="brandSub">共 — 条收录 · 数据来自原表 <code>异想体推荐表</code></p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab is-on" data-view="list" role="tab">推荐表</button>
+      <button class="tab" data-view="calc" role="tab">加班计算器</button>
+      <button class="tab" data-view="help" role="tab">表格说明</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================ 推荐表 -->
+<section class="view is-on" id="view-list">
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4a6 6 0 104.47 9.97l4.26 4.26 1.41-1.41-4.26-4.26A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/></svg>
+      <input id="q" type="search" autocomplete="off" placeholder="搜索编号、名称或任意备注文字（空格分隔多个关键词）">
+      <button class="clear-x" id="qClear" type="button" aria-label="清空搜索" hidden>&times;</button>
+    </div>
+    <div class="tool-right">
+      <label class="sel">
+        <span>排序</span>
+        <select id="sort">
+          <option value="row">原表顺序</option>
+          <option value="mgmt">管理推荐度 高→低</option>
+          <option value="wgrade">武器推荐度 极优→极差</option>
+          <option value="dps">武器 DPS 高→低</option>
+          <option value="range">攻击距离 远→近</option>
+          <option value="id">编号</option>
+        </select>
+      </label>
+      <div class="seg" role="group" aria-label="显示方式">
+        <button class="seg-b is-on" data-view-mode="table">表格</button>
+        <button class="seg-b" data-view-mode="card">卡片</button>
+      </div>
+    </div>
+  </div>
+
+  <details class="filters" id="filterPanel" open>
+    <summary>
+      <span>筛选条件</span>
+      <span class="f-count" id="fCount">未启用</span>
+    </summary>
+    <div class="f-body">
+      <div class="f-grid" id="fGrid"></div>
+      <div class="f-range">
+        <label for="dpsMin">武器 DPS 下限：<b id="dpsMinVal">0</b></label>
+        <input type="range" id="dpsMin" min="0" max="35" step="1" value="0">
+        <span class="hint">只统计原表写了 DPS 的武器</span>
+      </div>
+      <div class="f-foot">
+        <button class="btn-ghost" id="clearAll" type="button">清除全部筛选</button>
+        <span class="f-stat" id="stat">— / — 条</span>
+      </div>
+    </div>
+  </details>
+
+  <div class="active-chips" id="chips"></div>
+
+  <div id="result"></div>
+
+  <div class="empty" id="empty" hidden>
+    <p class="empty-t">没有符合条件的异想体</p>
+    <p class="empty-s">试着放宽筛选，或清空搜索关键词。</p>
+  </div>
+</section>
+
+<!-- ======================================================= 加班计算器 -->
+<section class="view" id="view-calc">
+  <div class="calc-grid">
+
+    <div class="panel">
+      <h2 class="p-h">输入区</h2>
+
+      <label class="switch">
+        <input type="checkbox" id="tech" checked>
+        <span class="sw-track"><span class="sw-dot"></span></span>
+        <span class="sw-txt">培训部科技<b>「普及培训手册」</b></span>
+      </label>
+
+      <div class="fld">
+        <label for="qual">员工品质</label>
+        <select id="qual"></select>
+      </div>
+
+      <div class="fld">
+        <label for="lvl">工作异想体等级</label>
+        <select id="lvl"></select>
+      </div>
+
+      <div class="fld">
+        <label for="target">想提升的属性点数</label>
+        <select id="target"></select>
+      </div>
+
+      <p class="note-warn" id="techNote"></p>
+    </div>
+
+    <div class="panel">
+      <h2 class="p-h">输出区</h2>
+      <div class="formula" id="formula"></div>
+      <div class="results">
+        <div class="res">
+          <div class="res-k">单次工作期望属性加成</div>
+          <div class="res-v" id="rPer">—</div>
+        </div>
+        <div class="res res-hi">
+          <div class="res-k" id="rCntK">提升 20 点属性需要工作</div>
+          <div class="res-v" id="rCnt">—</div>
+          <div class="res-u">次</div>
+        </div>
+      </div>
+      <p class="note" id="calcNote"></p>
+    </div>
+
+    <div class="panel panel-wide">
+      <h2 class="p-h">工作系数表<span class="p-h-sub">原表 <code>加班计算器</code> 工作表第 26–30 行，C–G 列；当前取值已高亮</span></h2>
+      <div class="mx-wrap"><table class="mx" id="mx"></table></div>
+      <p class="note">
+        原表用 <code>INDIRECT(ADDRESS(品质序号+25, 等级序号+2))</code> 从这张表取「工作系数」，
+        因此品质与等级都只取序号，轴向固定为：行＝员工品质 Ⅰ→Ⅴ，列＝异想体等级 ZAYIN→ALEPH。
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================================================= 表格说明 -->
+<section class="view" id="view-help">
+  <div class="help">
+    <div class="panel">
+      <h2 class="p-h">字段说明</h2>
+      <div class="tbl-wrap">
+        <table class="doc">
+          <thead><tr><th>页面字段</th><th>原表位置</th><th>说明</th></tr></thead>
+          <tbody id="docBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel" id="legendPanel">
+      <h2 class="p-h">推荐度标准<span class="p-h-sub">原表第 2 行三个单元格的批注原文</span></h2>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <div class="panel">
+      <h2 class="p-h">加班计算器使用须知<span class="p-h-sub">原表 <code>加班计算器</code> 工作表 B2 原文</span></h2>
+      <div class="notice" id="notice"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <span>内容为个人向整理，非官方数据。</span>
+  <span>原表：异想体推荐表 / 加班计算器，共 <b id="footCount">—</b> 条收录。</span>
+  <span>原表作者：<b id="footAuthor">—</b>（<a id="footSheet" href="#" target="_blank" rel="noopener">原表链接</a>）<br>
+    补充数据取自 <a id="footWiki" href="#" target="_blank" rel="noopener">Lobotomy Corp 中文 wiki</a>。</span>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

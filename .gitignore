@@ -1,0 +1,10 @@
+# 由脚本生成的中间产物与抓取缓存，可随时重新生成，不入库
+wiki_pages.json
+wiki_map.json
+wiki_raw.json
+wiki_data.json
+wiki_flags.json
+_*.txt
+
+__pycache__/
+*.pyc
