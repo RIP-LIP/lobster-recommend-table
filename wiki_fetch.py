@@ -113,6 +113,28 @@ def fetch_raw(mapping):
     return raw
 
 
+def fetch_tool_category():
+    """抓 wiki 的「分类:工具异想体」成员。
+
+    工具型是与危险等级**并列**的第六类，不是等级的一种，所以权威依据用 wiki 分类，
+    而不是靠「没有 EGO 武器」或编号含 09 去猜。
+    """
+    out, cont = [], None
+    while True:
+        p = {"action": "query", "list": "categorymembers",
+             "cmtitle": "分类:工具异想体", "cmlimit": 500, "format": "json"}
+        if cont:
+            p["cmcontinue"] = cont
+        d = api(p)
+        out += [m["title"] for m in d["query"]["categorymembers"]]
+        cont = d.get("continue", {}).get("cmcontinue")
+        if not cont:
+            break
+    json.dump(sorted(out), open(os.path.join(BASE, "wiki_toolcategory.json"), "w",
+                                 encoding="utf-8"), ensure_ascii=False, indent=1)
+    return out
+
+
 def main():
     items = load_items()
     print("原表条目 %d" % len(items))
@@ -124,6 +146,8 @@ def main():
                                    ("  未解析: " + ", ".join(missing)) if missing else ""))
     raw = fetch_raw(mapping)
     print("已抓正文 %d 份（空 %d）" % (len(raw), sum(1 for v in raw.values() if not v)))
+    tool = fetch_tool_category()
+    print("分类:工具异想体 %d 条" % len(tool))
 
 
 if __name__ == "__main__":

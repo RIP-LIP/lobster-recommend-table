@@ -28,10 +28,16 @@
   var MGMT_RANK = { '论外': 0, '高': 1, '中': 2, '低': 3, '极低': 4 };
   var WG_RANK = { '极优': 0, '优': 1, '良': 2, '差': 3, '极差': 4 };
   var RANGE_RANK = { '极近': 0, '近': 1, '短': 2, '一般': 3, '远': 4, '极远': 5 };
+  var TYPE_RANK = { '工具型': 0, 'ZAYIN': 1, 'TETH': 2, 'HE': 3, 'WAW': 4, 'ALEPH': 5 };
 
   var SORTERS = {
     row: function (a, b) { return a.row - b.row; },
     id: function (a, b) { return String(a.id).localeCompare(String(b.id), 'zh'); },
+    type: function (a, b) {
+      var ta = a.type || a.danger, tb = b.type || b.danger;
+      return (TYPE_RANK[ta] === undefined ? 9 : TYPE_RANK[ta]) -
+        (TYPE_RANK[tb] === undefined ? 9 : TYPE_RANK[tb]) || a.row - b.row;
+    },
     mgmt: function (a, b) {
       var x = MGMT_RANK[a.mgmtGrade], y = MGMT_RANK[b.mgmtGrade];
       return (x === undefined ? 9 : x) - (y === undefined ? 9 : y) || a.row - b.row;
@@ -56,7 +62,7 @@
 
   /* ====================================================== 筛选维度 */
   var GROUPS = [
-    { key: 'danger', label: '危险等级', opts: C.danger, get: function (i) { return [i.danger]; }, cls: function (v) { return 'd-' + v; } },
+    { key: 'type', label: '类型', opts: C.type || ['ZAYIN', 'TETH', 'HE', 'WAW', 'ALEPH', '工具型'], get: function (i) { return [i.type || i.danger]; }, cls: function (v) { return v === '工具型' ? 't-tool' : 'd-' + v; } },
     { key: 'mgmt', label: '管理推荐度', opts: ['论外', '高', '中', '低', '极低'], get: function (i) { return i.mgmtGrades || []; }, cls: function (v) { return 'm-' + v; } },
     { key: 'wgrade', label: 'EGO 武器推荐度', opts: C.grade, get: function (i) { return i.weaponGrades || []; }, cls: function (v) { return 'w-' + v; } },
     { key: 'wtype', label: 'EGO 武器类型', opts: ['A', 'W', 'H', 'T', 'Z'], get: function (i) { return i.weaponTypes || []; }, cls: function (v) { return 'd-' + (v === 'A' ? 'ALEPH' : v === 'W' ? 'WAW' : v === 'H' ? 'HE' : v === 'T' ? 'TETH' : 'ZAYIN'); } },
@@ -199,6 +205,8 @@
 
   var TRAIT_CN = { instinct: '本能', insight: '洞察', attachment: '依恋', repression: '镇压' };
   var RESIST_CN = { red: '红', white: '白', black: '黑', pale: '淡' };
+  // 工具型专用：tool 参数的三个取值，对照同页正文「持续使用型 / 携带型 / 单次使用型」
+  var TOOL_CN = { channel: '持续使用型', equip: '携带型', single: '单次使用型' };
 
   function wikiBlock(it) {
     var w = it.wiki;
@@ -211,8 +219,14 @@
       rows.push('<div class="wk-kv"><span class="wk-k">' + esc(k) + '</span><span class="wk-v">' + v + '</span></div>');
     }
     kv('伤害类型', it.dmgType ? esc(it.dmgType) + ' <span class="dim">(wiki: ' + esc(w.dmgTypeRaw) + ')</span>' : '');
+    kv('危险等级', it.isTool && w.level ? esc(w.level) : '');
     kv('攻击强度', esc(w.dmgStat));
     kv('计数器', esc(w.counter) + (w.counter === 'X' ? ' <span class="dim">(无计数器)</span>' : ''));
+    kv('工具类别', w.tool ? esc(TOOL_CN[w.tool] || w.tool) + ' <span class="dim">(wiki: ' + esc(w.tool) + ')</span>' : '');
+    if (w.toolText) {
+      rows.push('<div class="wk-kv wk-wide"><span class="wk-k">工具能力</span>' +
+        '<span class="wk-v wk-pre">' + esc(w.toolText) + '</span></div>');
+    }
     if (w.mood) {
       var md = [];
       if (w.mood['优']) md.push('优 ' + esc(w.mood['优']));
@@ -282,13 +296,14 @@
   function renderTable(list, terms) {
     var sortKey = state.sort;
     var sorted = list.slice().sort(SORTERS[sortKey] || SORTERS.row);
-    var head = ['编号', '异想体', '危险', '管理推荐度', 'EGO 武器', '攻击距离', '武器 DPS', 'EGO 防具', '抗性', '镇压'];
+    var head = ['编号', '异想体', '类型', '管理推荐度', 'EGO 武器', '攻击距离', '武器 DPS', 'EGO 防具', '抗性', '镇压'];
     var rows = sorted.map(function (it) {
       var open = !!state.open[it.row];
+      var tp = it.type || it.danger;
       return '<tr class="row' + (open ? ' open' : '') + '" data-row="' + it.row + '" tabindex="0">' +
         '<td class="c-id"><span class="caret">▶</span>' + hi(it.id, terms) + '</td>' +
         '<td class="c-name">' + hi(it.name, terms) + '</td>' +
-        '<td>' + bdg('d-' + it.danger, it.danger) + '</td>' +
+        '<td>' + bdg(tp === '工具型' ? 't-tool' : 'd-' + tp, tp) + '</td>' +
         '<td>' + (it.mgmtGrade ? bdg('m-' + it.mgmtGrade, it.mgmtGrade) : '<span class="dim">—</span>') + '</td>' +
         '<td>' + weaponCell(it) + (it.weaponType ? ' <span class="rng">' + esc(it.weaponType) + '</span>' : '') + '</td>' +
         '<td>' + (it.rangeLabel ? '<span class="rng">' + esc(it.rangeLabel) + (it.rangeValue !== null ? '(' + it.rangeValue + ')' : '') + '</span>' : '<span class="dim">—</span>') + '</td>' +
@@ -312,9 +327,10 @@
         return '<div class="crow"><div class="ck">' + esc(k) + '</div><div class="cv' + (cls ? ' ' + cls : '') + '">' +
           (v || '<span class="dim">—</span>') + '</div></div>';
       }
+      var tp = it.type || it.danger;
       return '<div class="card" data-row="' + it.row + '">' +
         '<div class="card-h"><span class="cid">' + hi(it.id, terms) + '</span><h3>' + hi(it.name, terms) + '</h3>' +
-        bdg('d-' + it.danger, it.danger) + '</div>' +
+        bdg(tp === '工具型' ? 't-tool' : 'd-' + tp, tp) + '</div>' +
         '<div class="card-tags">' +
         (it.mgmtGrade ? bdg('m-' + it.mgmtGrade, '管理 ' + it.mgmtGrade) : '') +
         weaponCell(it) + (it.weaponType ? ' <span class="rng">' + esc(it.weaponType) + '</span>' : '') +
@@ -426,7 +442,7 @@
   $('#result').addEventListener('click', function (e) {
     var th = e.target.closest('thead th');
     if (!th) return;
-    var map = { '0': 'id', '1': 'id', '2': 'row', '3': 'mgmt', '4': 'wgrade', '5': 'range', '6': 'dps', '7': 'row', '8': 'row', '9': 'row' };
+    var map = { '0': 'id', '1': 'id', '2': 'type', '3': 'mgmt', '4': 'wgrade', '5': 'range', '6': 'dps', '7': 'row', '8': 'row', '9': 'row' };
     var v = map[th.dataset.col];
     if (!v) return;
     state.sort = v;
@@ -506,7 +522,8 @@
     var doc = [
       ['异想体编号', 'A 列', '原表编号，含单位代号前缀（F / O / T / D）。最后一条「秃头-真是-太棒啦!」是特例，没有标准编号格式。'],
       ['异想体名称', 'B 列', '直接取原表，未做任何替换。'],
-      ['危险等级', 'C 列', 'ZAYIN / TETH / HE / WAW / ALEPH。'],
+      ['类型', 'C 列 + wiki', '共六类：ZAYIN / TETH / HE / WAW / ALEPH，以及与危险等级并列的「工具型」。17 条工具型取自 wiki 的分类:工具异想体，不参与等级筛选；它们各自的危险等级仍是真实数据，展开详情里能看到。'],
+      ['工具类别（wiki）', 'wiki Abn Infobox', '工具型专有，标明使用方式：持续使用型（channel）／携带型（equip）／单次使用型（single）。工具型没有 EGO 武器与防具，所以武器、防具两列显示为 —。'],
       ['管理推荐度', 'D 列', '取该格出现的最高一档推荐度作为标签；像「有拟态前：低／有拟态后：中」这种分情况的，会同时归入低和中两个筛选项。'],
       ['EGO 武器推荐度', 'E 列', '标签为该格出现的最高档（极优 > 优 > 良 > 差 > 极差）；括号里的字母是武器等级，【】里是攻击距离与数值。'],
       ['攻击距离', 'E 列【】', '极近 / 近 / 短 / 一般 / 远 / 极远，同时保留括号中的数值用于排序。'],

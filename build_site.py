@@ -202,9 +202,13 @@ def merge_wiki(items):
         it["wiki"] = wk
         it["dmgType"] = wk.get("dmgType")
         it["counter"] = wk.get("counter")
+        # 六类：ZAYIN / TETH / HE / WAW / ALEPH / 工具型
+        # 工具型是与危险等级并列的一类（wiki「分类:工具异想体」），不参与等级筛选
+        it["isTool"] = bool(wk.get("isTool"))
+        it["type"] = "工具型" if it["isTool"] else it["danger"]
         it["search"] += " " + " ".join(
             x for x in [wk.get("dmgType"), wk.get("dmgTypeRaw"), wk.get("counter"),
-                        it["suppressGrade"], it["suppressText"]] if x).lower()
+                        it["type"], it["suppressGrade"], it["suppressText"]] if x).lower()
 
         if it["suppressGrade"] == "未填":
             if wk.get("suppressText"):
@@ -283,6 +287,7 @@ def main():
             "ranges": RANGES,
             "dmgType": ["红", "白", "黑", "淡", "未知"],
             "suppressGrade": ["容易", "较难", "可镇压", "不会突破收容"],
+            "type": DANGER + ["工具型"],
         },
     }
 
@@ -305,7 +310,7 @@ def main():
         rep.append("%-14s %s" % (k, sorted(vals.items(), key=lambda x: -x[1])))
     rep.append("武器DPS缺失: " + str([it["name"] for it in items if it["weaponDps"] is None]))
     rep.append("防具抗性缺失: " + str([it["name"] for it in items if it["armorResist"] is None][:40]))
-    for k in ("dmgType", "suppressGrade"):
+    for k in ("dmgType", "suppressGrade", "type"):
         vals = {}
         for it in items:
             v = it.get(k)

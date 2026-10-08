@@ -20,36 +20,44 @@ TRAITS = ["instinct", "insight", "attachment", "repression"]   # 本能/洞察/�
 TRUTHY = {"1", "y", "yes", "true"}
 
 
+# wiki 上并存多个 infobox 模板，必须逐个尝试：
+#   Abn_Infobox    常规异想体，信息最全（伤害类型/计数器/心情/性格适配都在这）
+#   Abn Infobox    工具型异想体专用，只有 img1 / level / tool 三个参数（注意中间是空格）
+#   Root_Infocard / Legacy_Infocard  老版页面，无结构化参数
+TEMPLATES = ("Abn_Infobox", "Abn Infobox")
+
+
 def infobox(text):
-    """取 {{Abn_Infobox ...}} 的参数表。返回 dict；没有模板则返回 None。
+    """取第一个命中的 infobox 模板参数表。返回 (dict|None, 模板名)。
 
     两个坑（实测踩过）：
-      1. 不能用 `\\{\\{Abn_Infobox\\s*(.*?)\\n\\}\\}` 收尾——有的页面把收尾的 `}}`
+      1. 不能用 `\\{\\{模板\\s*(.*?)\\n\\}\\}` 收尾——有的页面把收尾的 `}}`
          和最后一个参数写在同一行（如 O-01-73 绝望骑士）。改为按花括号配平截取。
       2. 不能按行解析——同一页把 20 个 `*_stat` 全挤在一行。改为全局正则切参数。
     """
-    i = text.find("{{Abn_Infobox")
-    if i < 0:
-        return None
-    depth, j = 0, i
-    while j < len(text):
-        c = text[j]
-        if c == "{":
-            depth += 1
-        elif c == "}":
-            depth -= 1
+    for tpl in TEMPLATES:
+        i = text.find("{{" + tpl)
+        while i >= 0:
+            depth, j = 0, i
+            while j < len(text):
+                if text[j] == "{":
+                    depth += 1
+                elif text[j] == "}":
+                    depth -= 1
+                    if depth == 0:
+                        break
+                j += 1
             if depth == 0:
-                break
-        j += 1
-    if depth != 0:
-        return None
-    body = text[i + len("{{Abn_Infobox"):j].rstrip("}").rstrip()
-    out = {}
-    for k, v in re.findall(
-            r"\|\s*([a-zA-Z0-9_]+)\s*=\s*(.*?)(?=\|\s*[a-zA-Z0-9_]+\s*=|\Z)",
-            body, re.S):
-        out[k] = v.strip()
-    return out or None
+                body = text[i + len("{{") + len(tpl):j].rstrip("}").rstrip()
+                out = {}
+                for k, v in re.findall(
+                        r"\|\s*([a-zA-Z0-9_]+)\s*=\s*(.*?)(?=\|\s*[a-zA-Z0-9_]+\s*=|\Z)",
+                        body, re.S):
+                    out[k] = v.strip()
+                if out:
+                    return out, tpl
+            i = text.find("{{" + tpl, i + 1)
+    return None, None
 
 
 def num(v):
@@ -80,6 +88,9 @@ def clean_wiki_markup(s):
     """
     if not s:
         return s
+    s = re.sub(r"<gallery\b[^>]*>.*?</gallery>", "", s, flags=re.S | re.I)  # 去图集块
+    s = re.sub(r"<(blockquote|div|p|br)\b[^>]*>", "\n", s, flags=re.I)    # 保留文字，标签换行
+    s = re.sub(r"</(blockquote|div|p)>", "\n", s, flags=re.I)
     s = re.sub(r"<br\s*/?>", "\n", s, flags=re.I)
     s = re.sub(r"<[^>]+>", "", s)                      # 去内联 HTML/样式
     s = re.sub(r"\[File:[^\]]*\]", "", s, flags=re.I)  # 去文件引用
@@ -99,10 +110,11 @@ def extract(code, title, text):
     rec = {"id": code, "title": title,
            "url": "https://lobotomycorp.fandom.com/zh/wiki/" + urllib_quote(title) if title else None}
 
-    t = infobox(text)
-    rec["tpl"] = "Abn_Infobox" if t is not None else "prose"
+    t, tpl_name = infobox(text)
+    rec["tpl"] = tpl_name or "prose"
     rec["hasEscapeSec"] = has_section(text, "出逃信息")
     rec["suppressText"] = section_text(text, "镇压建议")
+    rec["toolText"] = section_text(text, "工具能力")
 
     if t is None:
         rec["ok"] = False
@@ -114,6 +126,8 @@ def extract(code, title, text):
 
     lvl = (g("level") or "").strip().upper()
     rec["level"] = lvl if lvl in ("ZAYIN", "TETH", "HE", "WAW", "ALEPH") else None
+    # 工具型专有：tool 标明使用方式，channel=持续使用型 / equip=携带型 等
+    rec["tool"] = g("tool") or None
     rec["dmgType"] = DMG_TYPE.get((g("dmg_type") or "").strip().lower())
     rec["dmgTypeRaw"] = g("dmg_type") or None
     rec["dmgStat"] = g("dmg_stat") or None
@@ -161,29 +175,41 @@ def main():
     src = open(os.path.join(BASE, "site", "data.js"), encoding="utf-8").read()
     items = json.loads(src[src.index("{"):src.rindex("}") + 1])["items"]
 
+    # 工具型是与危险等级并列的第六类，权威依据取 wiki 的「分类:工具异想体」
+    cat_path = os.path.join(BASE, "wiki_toolcategory.json")
+    tool_pages = set(json.load(open(cat_path, encoding="utf-8"))) if os.path.exists(cat_path) else set()
+
     out = {}
     for it in items:
         title = mapping.get(it["id"])
         text = raw.get(title, "") if title else ""
-        out[it["id"]] = extract(it["id"], title, text)
+        wk = extract(it["id"], title, text)
+        wk["isTool"] = bool(title and title in tool_pages)
+        out[it["id"]] = wk
 
     json.dump(out, open(os.path.join(BASE, "wiki_data.json"), "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
 
     from collections import Counter
+    tools = [k for k, v in out.items() if v["isTool"]]
+    # 自检：wiki 分类 vs 模板 tool 参数，两条独立依据必须一致
+    by_param = [k for k, v in out.items() if v.get("tool")]
     L = ["抽取条目 %d / %d" % (len(out), len(items)),
-         "模板：Abn_Infobox %d  纯文本 %d" % (
-             sum(1 for v in out.values() if v["tpl"] == "Abn_Infobox"),
-             sum(1 for v in out.values() if v["tpl"] == "prose")),
-         "no_escape 标注：真 %d  有此字段 %d" % (
-             sum(1 for v in out.values() if v.get("noEscape") is True),
-             sum(1 for v in out.values() if v.get("noEscape") is not None)),
-         "抽到镇压建议正文：%d 条" % sum(1 for v in out.values() if v.get("suppressText")),
-         "",
-         "=== 原表镇压留空、但 wiki 载有镇压建议（可直接补进镇压栏）==="]
-    for k, v in out.items():
-        if v.get("suppressText"):
-            L.append("  %-9s %-14s 长度 %d" % (k, v["title"], len(v["suppressText"])))
+         "模板：%s" % dict(Counter(v["tpl"] for v in out.values())),
+         "工具型（wiki 分类:工具异想体）%d 条；模板 tool 参数 %d 条；两者差异 %s"
+         % (len(tools), len(by_param), sorted(set(tools) ^ set(by_param)) or "无"),
+         "no_escape 标注真 %d；抽到镇压建议正文 %d；抽到工具能力正文 %d"
+         % (sum(1 for v in out.values() if v.get("noEscape") is True),
+            sum(1 for v in out.values() if v.get("suppressText")),
+            sum(1 for v in out.values() if v.get("toolText"))),
+         "", "=== 17 条工具型（分类里移出危险等级，单列为第六类）==="]
+    for k in sorted(tools):
+        v = out[k]
+        L.append("  %-9s %-14s 危险等级=%-6s tool=%-8s 类别=%s" % (
+            k, v["title"], v.get("level"), v.get("tool"),
+            "持续使用型" if v.get("tool") == "channel" else
+            "携带型" if v.get("tool") == "equip" else
+            "单次使用型" if v.get("tool") == "single" else "—"))
     open(os.path.join(BASE, "_wiki_report.txt"), "w", encoding="utf-8").write("\n".join(L))
 
 
