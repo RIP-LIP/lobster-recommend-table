@@ -8,3 +8,14 @@ _*.txt
 
 __pycache__/
 *.pyc
+
+# 本目录同时放着模组开发（modding）的文件，与本仓库无关，不入库。
+# 下面这些前缀一旦出现即忽略，避免 git add -A 把它们扫进来。
+/_decomp/
+/mod_src/
+/dist/
+/.worktrees/
+*_MOD/
+*_MOD
+/Detailed info */
+MOD_FIX_REPORT*.md

@@ -24,41 +24,61 @@
     return (d === undefined ? n : Number(n.toFixed(d))) + '';
   }
 
-  /* ====================================================== 排序权重 */
+  /* ====================================================== 排序
+     单一入口：sortVal 取值 + cmp 比较，方向由 state.dir 控制（asc / desc）。
+     任何一列都能排，不需要为升降序各做一个控件。 */
   var MGMT_RANK = { '论外': 0, '高': 1, '中': 2, '低': 3, '极低': 4 };
   var WG_RANK = { '极优': 0, '优': 1, '良': 2, '差': 3, '极差': 4 };
-  var RANGE_RANK = { '极近': 0, '近': 1, '短': 2, '一般': 3, '远': 4, '极远': 5 };
   var TYPE_RANK = { '工具型': 0, 'ZAYIN': 1, 'TETH': 2, 'HE': 3, 'WAW': 4, 'ALEPH': 5 };
+  var SUP_RANK = { '容易': 0, '较难': 1, '可镇压': 2, '不会突破收容': 3, '未填': 9 };
+  var DMG_RANK = { '红': 0, '白': 1, '黑': 2, '淡': 3, '未知': 9 };
 
-  var SORTERS = {
-    row: function (a, b) { return a.row - b.row; },
-    id: function (a, b) { return String(a.id).localeCompare(String(b.id), 'zh'); },
-    type: function (a, b) {
-      var ta = a.type || a.danger, tb = b.type || b.danger;
-      return (TYPE_RANK[ta] === undefined ? 9 : TYPE_RANK[ta]) -
-        (TYPE_RANK[tb] === undefined ? 9 : TYPE_RANK[tb]) || a.row - b.row;
-    },
-    mgmt: function (a, b) {
-      var x = MGMT_RANK[a.mgmtGrade], y = MGMT_RANK[b.mgmtGrade];
-      return (x === undefined ? 9 : x) - (y === undefined ? 9 : y) || a.row - b.row;
-    },
-    wgrade: function (a, b) {
-      var x = WG_RANK[a.weaponGrade], y = WG_RANK[b.weaponGrade];
-      return (x === undefined ? 9 : x) - (y === undefined ? 9 : y) || a.row - b.row;
-    },
-    dps: function (a, b) {
-      if (a.weaponDps === null && b.weaponDps === null) return a.row - b.row;
-      if (a.weaponDps === null) return 1;
-      if (b.weaponDps === null) return -1;
-      return b.weaponDps - a.weaponDps || a.row - b.row;
-    },
-    range: function (a, b) {
-      if (a.rangeLabel === null && b.rangeLabel === null) return a.row - b.row;
-      if (a.rangeLabel === null) return 1;
-      if (b.rangeLabel === null) return -1;
-      return RANGE_RANK[b.rangeLabel] - RANGE_RANK[a.rangeLabel] || (b.rangeValue || 0) - (a.rangeValue || 0) || a.row - b.row;
+  // 可排序列：下拉项 + 表头点击都走这张表
+  var SORT_FIELDS = [
+    { v: 'row', label: '原表顺序' },
+    { v: 'type', label: '威胁程度（类型）' },
+    { v: 'mgmt', label: '管理推荐度' },
+    { v: 'wgrade', label: 'EGO 武器推荐度' },
+    { v: 'agrade', label: 'EGO 防具推荐度' },
+    { v: 'range', label: '攻击距离' },
+    { v: 'dps', label: '武器 DPS' },
+    { v: 'supp', label: '镇压' },
+    { v: 'dmg', label: '伤害类型' },
+    { v: 'prefix', label: '编号前缀' },
+    { v: 'id', label: '编号' }
+  ];
+  // 表头列序 -> 排序键
+  var COL_SORT = ['id', 'id', 'type', 'mgmt', 'wgrade', 'range', 'dps', 'agrade', 'row', 'supp'];
+
+  function rankOf(map, v) { var r = map[v]; return r === undefined ? 99 : r; }
+
+  function sortVal(it, key) {
+    switch (key) {
+      case 'id': return String(it.id);
+      case 'prefix': return String(it.prefix);
+      case 'type': return rankOf(TYPE_RANK, it.type || it.danger);
+      case 'mgmt': return rankOf(MGMT_RANK, it.mgmtGrade);
+      case 'wgrade': return rankOf(WG_RANK, it.weaponGrade);
+      case 'agrade': return rankOf(WG_RANK, it.armorGrade);
+      case 'supp': return rankOf(SUP_RANK, it.suppressGrade);
+      case 'dmg': return rankOf(DMG_RANK, it.dmgType);
+      case 'range': return it.rangeValue === null || it.rangeValue === undefined ? -1 : it.rangeValue;
+      case 'dps': return it.weaponDps === null || it.weaponDps === undefined ? -1 : it.weaponDps;
+      default: return it.row;
     }
-  };
+  }
+
+  function sortedList(list) {
+    var key = state.sort, dir = state.dir;
+    if (key === 'row' && dir === 'asc') return list.slice();
+    return list.slice().sort(function (a, b) {
+      var x = sortVal(a, key), y = sortVal(b, key);
+      var r = (typeof x === 'string' || typeof y === 'string')
+        ? String(x).localeCompare(String(y), 'zh') : x - y;
+      if (r === 0) return a.row - b.row;         // 同值保持原表顺序，升降序都稳定
+      return dir === 'desc' ? -r : r;
+    });
+  }
 
   /* ====================================================== 筛选维度 */
   var GROUPS = [
@@ -77,6 +97,7 @@
   var state = {
     q: '',
     sort: 'row',
+    dir: 'asc',
     mode: 'table',
     open: {},
     dpsMin: 0,
@@ -203,7 +224,7 @@
       (it.weaponDpsMax !== null ? '<span class="dim"> → ' + num(it.weaponDpsMax) + '</span>' : '');
   }
 
-  var TRAIT_CN = { instinct: '本能', insight: '洞察', attachment: '依恋', repression: '镇压' };
+  var TRAIT_CN = { instinct: '本能', insight: '洞察', attachment: '沟通', repression: '压迫' };
   var RESIST_CN = { red: '红', white: '白', black: '黑', pale: '淡' };
   // 工具型专用：tool 参数的三个取值，对照同页正文「持续使用型 / 携带型 / 单次使用型」
   var TOOL_CN = { channel: '持续使用型', equip: '携带型', single: '单次使用型' };
@@ -294,8 +315,7 @@
   }
 
   function renderTable(list, terms) {
-    var sortKey = state.sort;
-    var sorted = list.slice().sort(SORTERS[sortKey] || SORTERS.row);
+    var sorted = sortedList(list);
     var head = ['编号', '异想体', '类型', '管理推荐度', 'EGO 武器', '攻击距离', '武器 DPS', 'EGO 防具', '抗性', '镇压'];
     var rows = sorted.map(function (it) {
       var open = !!state.open[it.row];
@@ -317,7 +337,10 @@
 
     return '<div class="tbl-wrap"><table class="grid"><thead><tr>' +
       head.map(function (h, i) {
-        return '<th data-col="' + i + '">' + esc(h) + '</th>';
+        var key = COL_SORT[i];
+        var on = state.sort === key && key !== 'row';
+        return '<th data-col="' + i + '"' + (on ? ' class="sorted"' : '') + '>' + esc(h) +
+          (on ? '<span class="th-arrow">' + (state.dir === 'desc' ? '▼' : '▲') + '</span>' : '') + '</th>';
       }).join('') + '</tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
@@ -411,7 +434,52 @@
     $('#q').value = ''; $('#q').focus(); render();
   });
 
-  $('#sort').addEventListener('change', function () { state.sort = this.value; render(); });
+  /* 排序：同一个控件既选字段也切方向。
+     选新字段 -> 默认升序；再点同一项 -> 降序；不额外加按钮。 */
+  function setSort(key) {
+    if (state.sort === key) state.dir = state.dir === 'asc' ? 'desc' : 'asc';
+    else { state.sort = key; state.dir = 'asc'; }
+    syncSortUI();
+    render();
+  }
+
+  function syncSortUI() {
+    var cur = null;
+    for (var i = 0; i < SORT_FIELDS.length; i++) if (SORT_FIELDS[i].v === state.sort) cur = SORT_FIELDS[i];
+    $('#srtVal').textContent = cur ? cur.label : '原表顺序';
+    $('#srtArrow').textContent = state.dir === 'desc' ? '▼' : '▲';
+    $('#srtArrow').classList.toggle('desc', state.dir === 'desc');
+    $$('#srtMenu .srt-i').forEach(function (b) {
+      b.classList.toggle('on', b.dataset.v === state.sort);
+      b.dataset.dir = state.sort === b.dataset.v ? state.dir : '';
+    });
+    $('#srtBtn').setAttribute('aria-expanded', $('#srtMenu').hidden ? 'false' : 'true');
+  }
+
+  function renderSortMenu() {
+    $('#srtMenu').innerHTML = SORT_FIELDS.map(function (f) {
+      return '<button type="button" class="srt-i" role="option" data-v="' + f.v + '">' +
+        esc(f.label) + '<span class="srt-i-a"></span></button>';
+    }).join('');
+  }
+
+  function closeSort() { $('#srtMenu').hidden = true; syncSortUI(); }
+
+  $('#srtBtn').addEventListener('click', function (e) {
+    e.stopPropagation();
+    var m = $('#srtMenu');
+    m.hidden = !m.hidden;
+    syncSortUI();
+  });
+  $('#srtMenu').addEventListener('click', function (e) {
+    var b = e.target.closest('.srt-i');
+    if (!b) return;
+    setSort(b.dataset.v);
+    closeSort();
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('#srt') && !$('#srtMenu').hidden) closeSort();
+  });
 
   $('#dpsMin').addEventListener('input', function () {
     state.dpsMin = +this.value;
@@ -438,16 +506,13 @@
     if (r) { e.preventDefault(); toggleRow(+r.dataset.row); }
   });
 
-  /* 表头点击 → 按列排序 */
+  /* 表头点击 = 选中该列；再点同一列 = 切方向 */
   $('#result').addEventListener('click', function (e) {
     var th = e.target.closest('thead th');
     if (!th) return;
-    var map = { '0': 'id', '1': 'id', '2': 'type', '3': 'mgmt', '4': 'wgrade', '5': 'range', '6': 'dps', '7': 'row', '8': 'row', '9': 'row' };
-    var v = map[th.dataset.col];
-    if (!v) return;
-    state.sort = v;
-    $('#sort').value = v;
-    render();
+    var key = COL_SORT[+th.dataset.col];
+    if (!key || key === 'row') return;
+    setSort(key);
   });
 
   $$('.tab').forEach(function (t) {
@@ -557,6 +622,9 @@
     fillSelect($('#qual'), QUALS, 'Ⅳ');
     fillSelect($('#lvl'), C.danger, 'ALEPH');
     fillSelect($('#target'), CALC.targets, String(CALC.targetDefault));
+
+    renderSortMenu();
+    syncSortUI();
 
     ['#tech', '#qual', '#lvl', '#target'].forEach(function (s) {
       $(s).addEventListener('change', renderCalc);

@@ -38,18 +38,12 @@
       <button class="clear-x" id="qClear" type="button" aria-label="清空搜索" hidden>&times;</button>
     </div>
     <div class="tool-right">
-      <label class="sel">
-        <span>排序</span>
-        <select id="sort">
-          <option value="row">原表顺序</option>
-          <option value="type">类型 工具型→ALEPH</option>
-          <option value="mgmt">管理推荐度 高→低</option>
-          <option value="wgrade">武器推荐度 极优→极差</option>
-          <option value="dps">武器 DPS 高→低</option>
-          <option value="range">攻击距离 远→近</option>
-          <option value="id">编号</option>
-        </select>
-      </label>
+      <div class="srt" id="srt">
+        <button type="button" class="srt-b" id="srtBtn" aria-haspopup="listbox" aria-expanded="false">
+          <span class="srt-k">排序</span><span class="srt-v" id="srtVal">原表顺序</span><span class="srt-a" id="srtArrow">▲</span>
+        </button>
+        <div class="srt-m" id="srtMenu" role="listbox" hidden></div>
+      </div>
       <div class="seg" role="group" aria-label="显示方式">
         <button class="seg-b is-on" data-view-mode="table">表格</button>
         <button class="seg-b" data-view-mode="card">卡片</button>

@@ -112,6 +112,35 @@ main{max-width:1400px;margin:0 auto;padding:20px 22px 60px}
 }
 .seg-b.is-on{background:var(--panel2);color:var(--fg)}
 
+/* 排序：一个控件同时承担「选字段」与「切方向」 */
+.srt{position:relative}
+.srt-b{
+  display:flex;align-items:center;gap:7px;cursor:pointer;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  color:var(--fg);font:inherit;font-size:13px;padding:8px 11px;white-space:nowrap;
+}
+.srt-b:hover{border-color:var(--line2)}
+.srt-k{color:var(--mute);font-size:12.5px}
+.srt-v{font-weight:600}
+.srt-a{color:var(--amber);font-size:10px;line-height:1}
+.srt-a.desc{color:var(--blue)}
+.srt-m{
+  position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:196px;
+  background:var(--panel2);border:1px solid var(--line2);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:5px;max-height:60vh;overflow:auto;
+}
+.srt-i{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;
+  appearance:none;border:0;background:transparent;color:var(--dim);
+  font:inherit;font-size:13px;text-align:left;padding:7px 10px;border-radius:6px;cursor:pointer;
+}
+.srt-i:hover{background:rgba(255,255,255,.05);color:var(--fg)}
+.srt-i.on{background:rgba(224,164,74,.13);color:#f0c37c}
+.srt-i-a{font-size:10px;color:var(--amber)}
+.srt-i[data-dir="desc"] .srt-i-a::after{content:"▼"}
+.srt-i[data-dir="asc"] .srt-i-a::after{content:"▲"}
+th.th-arrow{font-size:9px;margin-left:5px;color:var(--amber);vertical-align:1px}
+
 /* ============================================================ 筛选 */
 .filters{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin-bottom:12px}
 .filters>summary{
