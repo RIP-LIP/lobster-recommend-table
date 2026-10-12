@@ -172,7 +172,7 @@ def suppress_reason(it, wk):
 def main():
     mapping = json.load(open(os.path.join(BASE, "wiki_map.json"), encoding="utf-8"))
     raw = json.load(open(os.path.join(BASE, "wiki_raw.json"), encoding="utf-8"))
-    src = open(os.path.join(BASE, "site", "data.js"), encoding="utf-8").read()
+    src = open(os.path.join(BASE, "docs", "data.js"), encoding="utf-8").read()
     items = json.loads(src[src.index("{"):src.rindex("}") + 1])["items"]
 
     # 工具型是与危险等级并列的第六类，权威依据取 wiki 的「分类:工具异想体」

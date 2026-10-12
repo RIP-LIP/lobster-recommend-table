@@ -8,6 +8,8 @@
   var C = D.constants;
   var CALC = D.calc;
 
+  var SRC = D.meta.source || {};
+
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
@@ -35,17 +37,17 @@
 
   // 可排序列：下拉项 + 表头点击都走这张表
   var SORT_FIELDS = [
-    { v: 'row', label: '原表顺序' },
-    { v: 'type', label: '威胁程度（类型）' },
-    { v: 'mgmt', label: '管理推荐度' },
-    { v: 'wgrade', label: 'EGO 武器推荐度' },
-    { v: 'agrade', label: 'EGO 防具推荐度' },
-    { v: 'range', label: '攻击距离' },
-    { v: 'dps', label: '武器 DPS' },
-    { v: 'supp', label: '镇压' },
-    { v: 'dmg', label: '伤害类型' },
-    { v: 'prefix', label: '编号前缀' },
-    { v: 'id', label: '编号' }
+    { v: 'row', label: 's.row' },
+    { v: 'type', label: 's.type' },
+    { v: 'mgmt', label: 's.mgmt' },
+    { v: 'wgrade', label: 's.wgrade' },
+    { v: 'agrade', label: 's.agrade' },
+    { v: 'range', label: 's.range' },
+    { v: 'dps', label: 's.dps' },
+    { v: 'supp', label: 's.supp' },
+    { v: 'dmg', label: 's.dmg' },
+    { v: 'prefix', label: 's.prefix' },
+    { v: 'id', label: 's.id' }
   ];
   // 表头列序 -> 排序键
   var COL_SORT = ['id', 'id', 'type', 'mgmt', 'wgrade', 'range', 'dps', 'agrade', 'row', 'supp'];
@@ -82,16 +84,16 @@
 
   /* ====================================================== 筛选维度 */
   var GROUPS = [
-    { key: 'type', label: '类型', opts: C.type || ['ZAYIN', 'TETH', 'HE', 'WAW', 'ALEPH', '工具型'], get: function (i) { return [i.type || i.danger]; }, cls: function (v) { return v === '工具型' ? 't-tool' : 'd-' + v; } },
-    { key: 'mgmt', label: '管理推荐度', opts: ['论外', '高', '中', '低', '极低'], get: function (i) { return i.mgmtGrades || []; }, cls: function (v) { return 'm-' + v; } },
-    { key: 'wgrade', label: 'EGO 武器推荐度', opts: C.grade, get: function (i) { return i.weaponGrades || []; }, cls: function (v) { return 'w-' + v; } },
-    { key: 'wtype', label: 'EGO 武器类型', opts: ['A', 'W', 'H', 'T', 'Z'], get: function (i) { return i.weaponTypes || []; }, cls: function (v) { return 'd-' + (v === 'A' ? 'ALEPH' : v === 'W' ? 'WAW' : v === 'H' ? 'HE' : v === 'T' ? 'TETH' : 'ZAYIN'); } },
-    { key: 'range', label: '攻击距离', opts: ['极近', '近', '短', '一般', '远', '极远'], get: function (i) { return i.rangeLabel ? [i.rangeLabel] : []; }, cls: function () { return ''; } },
-    { key: 'agrade', label: 'EGO 防具推荐度', opts: C.grade, get: function (i) { return i.armorGrades || []; }, cls: function (v) { return 'w-' + v; } },
-    { key: 'atype', label: 'EGO 防具类型', opts: ['A', 'W', 'H', 'T', 'Z'], get: function (i) { return i.armorTypes || []; }, cls: function (v) { return 'd-' + (v === 'A' ? 'ALEPH' : v === 'W' ? 'WAW' : v === 'H' ? 'HE' : v === 'T' ? 'TETH' : 'ZAYIN'); } },
-    { key: 'supp', label: '镇压', opts: C.suppressGrade || ['容易', '较难', '可镇压', '不会突破收容'], get: function (i) { return [i.suppressGrade]; }, cls: function (v) { return v === '不会突破收容' ? 's-未填' : v === '可镇压' ? 's-未填' : 's-' + v; } },
-    { key: 'dmg', label: '伤害类型', opts: C.dmgType || [], get: function (i) { return i.dmgType ? [i.dmgType] : []; }, cls: function () { return ''; } },
-    { key: 'prefix', label: '编号前缀', opts: ['F', 'O', 'T', 'D'], get: function (i) { return [i.prefix]; }, cls: function () { return ''; } }
+    { key: 'type', label: 'g.type', opts: C.type || ['ZAYIN', 'TETH', 'HE', 'WAW', 'ALEPH', '工具型'], get: function (i) { return [i.type || i.danger]; }, cls: function (v) { return v === '工具型' ? 't-tool' : 'd-' + v; } },
+    { key: 'mgmt', label: 'g.mgmt', opts: ['论外', '高', '中', '低', '极低'], get: function (i) { return i.mgmtGrades || []; }, cls: function (v) { return 'm-' + v; } },
+    { key: 'wgrade', label: 'g.wgrade', opts: C.grade, get: function (i) { return i.weaponGrades || []; }, cls: function (v) { return 'w-' + v; } },
+    { key: 'wtype', label: 'g.wtype', opts: ['A', 'W', 'H', 'T', 'Z'], get: function (i) { return i.weaponTypes || []; }, cls: function (v) { return 'd-' + (v === 'A' ? 'ALEPH' : v === 'W' ? 'WAW' : v === 'H' ? 'HE' : v === 'T' ? 'TETH' : 'ZAYIN'); } },
+    { key: 'range', label: 'g.range', opts: ['极近', '近', '短', '一般', '远', '极远'], get: function (i) { return i.rangeLabel ? [i.rangeLabel] : []; }, cls: function () { return ''; } },
+    { key: 'agrade', label: 'g.agrade', opts: C.grade, get: function (i) { return i.armorGrades || []; }, cls: function (v) { return 'w-' + v; } },
+    { key: 'atype', label: 'g.atype', opts: ['A', 'W', 'H', 'T', 'Z'], get: function (i) { return i.armorTypes || []; }, cls: function (v) { return 'd-' + (v === 'A' ? 'ALEPH' : v === 'W' ? 'WAW' : v === 'H' ? 'HE' : v === 'T' ? 'TETH' : 'ZAYIN'); } },
+    { key: 'supp', label: 'g.supp', opts: C.suppressGrade || ['容易', '较难', '可镇压', '不会突破收容'], get: function (i) { return [i.suppressGrade]; }, cls: function (v) { return v === '不会突破收容' ? 's-未填' : v === '可镇压' ? 's-未填' : 's-' + v; } },
+    { key: 'dmg', label: 'g.dmg', opts: C.dmgType || [], get: function (i) { return i.dmgType ? [i.dmgType] : []; }, cls: function () { return ''; } },
+    { key: 'prefix', label: 'g.prefix', opts: ['F', 'O', 'T', 'D'], get: function (i) { return [i.prefix]; }, cls: function () { return ''; } }
   ];
 
   var state = {
@@ -154,10 +156,10 @@
         var n = TOTALS[g.key + '\u0000' + v] || 0;
         var on = state.sel[g.key][v] ? ' on' : '';
         return '<button class="chip' + on + '" data-g="' + g.key + '" data-v="' + esc(v) + '"' +
-          (n === 0 ? ' style="opacity:.35"' : '') + '>' + esc(v) +
+          (n === 0 ? ' style="opacity:.35"' : '') + '>' + esc(TV(v)) +
           '<span class="n">' + n + '</span></button>';
       }).join('');
-      return '<div class="fg"><div class="fg-t">' + esc(g.label) + '</div><div class="chips">' + chips + '</div></div>';
+      return '<div class="fg"><div class="fg-t">' + esc(T(g.label)) + '</div><div class="chips">' + chips + '</div></div>';
     }).join('');
     $('#fGrid').innerHTML = html;
   }
@@ -165,22 +167,22 @@
   function renderChips() {
     var af = activeFilters();
     var h = af.map(function (f) {
-      return '<span class="tag"><b>' + esc(f.label) + '</b>' + esc(f.val) +
+      return '<span class="tag"><b>' + esc(T(f.label)) + '</b>' + esc(TV(f.val)) +
         '<button type="button" data-g="' + f.key + '" data-v="' + esc(f.val) + '" aria-label="移除">&times;</button></span>';
     });
     if (state.dpsMin > 0) {
-      h.push('<span class="tag"><b>武器 DPS</b>≥ ' + state.dpsMin +
+      h.push('<span class="tag"><b>Weapon DPS</b>≥ ' + state.dpsMin +
         '<button type="button" data-g="dps" data-v="0" aria-label="移除">&times;</button></span>');
     }
     if (state.q.trim()) {
-      h.push('<span class="tag"><b>搜索</b>' + esc(state.q.trim()) +
+      h.push('<span class="tag"><b>Search</b>' + esc(state.q.trim()) +
         '<button type="button" data-g="q" data-v="" aria-label="移除">&times;</button></span>');
     }
     $('#chips').innerHTML = h.join('');
 
     var n = af.length + (state.dpsMin > 0 ? 1 : 0) + (state.q.trim() ? 1 : 0);
     var fc = $('#fCount');
-    fc.textContent = n === 0 ? '未启用' : '已启用 ' + n + ' 项';
+    fc.textContent = n === 0 ? T('filterOff') : interp(T('filterOn'), { n: n });
     fc.className = 'f-count' + (n ? ' on' : '');
   }
 
@@ -197,7 +199,12 @@
     return out;
   }
 
-  function bdg(cls, txt) { return '<span class="bdg ' + cls + '">' + esc(txt) + '</span>'; }
+  function bdg(cls, txt) { return '<span class="bdg ' + cls + '">' + esc(TV(txt)) + '</span>'; }
+
+  function typeBadge(it) {
+    var tp = it.type || it.danger;
+    return bdg(tp === '工具型' ? 't-tool' : 'd-' + tp, tp);
+  }
 
   function weaponCell(it) {
     if (!it.weaponGrade) return '<span class="dim">—</span>';
@@ -239,25 +246,25 @@
       if (v === null || v === undefined || v === '' || (Array.isArray(v) && !v.length)) return;
       rows.push('<div class="wk-kv"><span class="wk-k">' + esc(k) + '</span><span class="wk-v">' + v + '</span></div>');
     }
-    kv('伤害类型', it.dmgType ? esc(it.dmgType) + ' <span class="dim">(wiki: ' + esc(w.dmgTypeRaw) + ')</span>' : '');
-    kv('危险等级', it.isTool && w.level ? esc(w.level) : '');
-    kv('攻击强度', esc(w.dmgStat));
-    kv('计数器', esc(w.counter) + (w.counter === 'X' ? ' <span class="dim">(无计数器)</span>' : ''));
-    kv('工具类别', w.tool ? esc(TOOL_CN[w.tool] || w.tool) + ' <span class="dim">(wiki: ' + esc(w.tool) + ')</span>' : '');
+    kv(T('wkDmg'), it.dmgType ? esc(TV(it.dmgType)) + ' <span class="dim">(wiki: ' + esc(w.dmgTypeRaw) + ')</span>' : '');
+    kv(T('wkLevel'), it.isTool && w.level ? esc(w.level) : '');
+    kv(T('wkStat'), esc(w.dmgStat));
+    kv(T('wkCounter'), esc(w.counter) + (w.counter === 'X' ? ' <span class="dim">' + esc(T('wkNoCounter')) + '</span>' : ''));
+    kv(T('wkTool'), w.tool ? esc(TV(TOOL_CN[w.tool] || w.tool)) + ' <span class="dim">(wiki: ' + esc(w.tool) + ')</span>' : '');
     if (w.toolText) {
-      rows.push('<div class="wk-kv wk-wide"><span class="wk-k">工具能力</span>' +
+      rows.push('<div class="wk-kv wk-wide"><span class="wk-k">' + esc(T('wkToolText')) + '</span>' +
         '<span class="wk-v wk-pre">' + esc(w.toolText) + '</span></div>');
     }
     if (w.mood) {
       var md = [];
-      if (w.mood['优']) md.push('优 ' + esc(w.mood['优']));
-      if (w.mood['良']) md.push('良 ' + esc(w.mood['良']));
-      if (w.mood['差']) md.push('差 ' + esc(w.mood['差']));
-      kv('心情值区间', md.join(' / ') || '');
+      if (w.mood['优']) md.push(TV('优') + ' ' + esc(w.mood['优']));
+      if (w.mood['良']) md.push(TV('良') + ' ' + esc(w.mood['良']));
+      if (w.mood['差']) md.push(TV('差') + ' ' + esc(w.mood['差']));
+      kv(T('wkMood'), md.join(' / ') || '');
     }
-    kv('PE-BOX 上限', w.maxPeBox === null || w.maxPeBox === undefined ? '' : esc(w.maxPeBox));
+    kv(T('wkPe'), w.maxPeBox === null || w.maxPeBox === undefined ? '' : esc(w.maxPeBox));
     if (w.workSpeed !== null && w.workSpeed !== undefined && w.workSpeed !== '') {
-      kv('工作速度 / 冷却', esc(w.workSpeed) + ' / ' +
+      kv(T('wkWork'), esc(w.workSpeed) + ' / ' +
         (w.workCd === null || w.workCd === undefined ? '—' : esc(w.workCd)));
     }
 
@@ -265,73 +272,72 @@
       var r = [];
       for (var c in w.resist) {
         if (w.resist[c] === null || w.resist[c] === undefined) continue;
-        r.push('<span>' + RESIST_CN[c] + ' <b>' + esc(w.resist[c]) + '</b></span>');
+        r.push('<span>' + esc(TV(RESIST_CN[c])) + ' <b>' + esc(w.resist[c]) + '</b></span>');
       }
       if (r.length) {
-        rows.push('<div class="wk-kv"><span class="wk-k">异想体自身抗性</span><span class="wk-v">' +
+        rows.push('<div class="wk-kv"><span class="wk-k">' + esc(T('wkResist')) + '</span><span class="wk-v">' +
           '<span class="res4">' + r.join('') + '</span></span></div>');
       }
     }
 
     if (w.traits && Object.keys(w.traits).length) {
-      var head = '', body = '';
+      var body = '';
       for (var a in TRAIT_CN) {
         if (!w.traits[a]) continue;
         var st = w.traitStats && w.traitStats[a] ? w.traitStats[a] : [];
-        head += '<th>' + TRAIT_CN[a] + '</th>';
+        var lbl = esc(TV(TRAIT_CN[a]));
         var tds = '';
         for (var i = 0; i < w.traits[a].length; i++) {
-          tds += '<td>' + esc(w.traits[a][i] || '—') +
+          tds += '<td>' + esc(TV(w.traits[a][i] || '—')) +
             (st[i] ? '<em>' + esc(st[i]) + '</em>' : '') + '</td>';
         }
-        body += '<tr><th>' + TRAIT_CN[a] + '</th>' + tds + '</tr>';
+        body += '<tr><th>' + lbl + '</th>' + tds + '</tr>';
       }
-      rows.push('<div class="wk-kv wk-wide"><span class="wk-k">员工性格适配</span>' +
+      rows.push('<div class="wk-kv wk-wide"><span class="wk-k">' + esc(T('wkTrait')) + '</span>' +
         '<span class="wk-v"><table class="wk-traits"><thead><tr><th></th>' +
         '<th>Ⅰ</th><th>Ⅱ</th><th>Ⅲ</th><th>Ⅳ</th><th>Ⅴ</th></tr></thead><tbody>' + body + '</tbody></table>' +
         '</span></div>');
     }
 
     if (!rows.length) {
-      rows.push('<div class="wk-kv"><span class="wk-v dim">该 wiki 页面不是结构化模板，无可提取字段</span></div>');
+      rows.push('<div class="wk-kv"><span class="wk-v dim">' + esc(T('wkStruct')) + '</span></div>');
     }
 
-    var link = w.url ? '<a class="wk-link" href="' + esc(w.url) + '" target="_blank" rel="noopener">wiki 页面 ↗</a>' : '';
-    return '<div class="dwiki"><div class="dwiki-h">官方 wiki 补充数据' + link + '</div>' +
+    var link = w.url ? '<a class="wk-link" href="' + esc(w.url) + '" target="_blank" rel="noopener">' + esc(T('wikiPage')) + '</a>' : '';
+    return '<div class="dwiki"><div class="dwiki-h">' + esc(T('wikiTitle')) + link + '</div>' +
       '<div class="dwiki-b">' + out.join('') + rows.join('') + '</div></div>';
   }
 
   function detailHTML(it, terms) {
     function cell(k, v) {
-      return '<div class="dcell"><div class="dk">' + esc(k) + '</div><div class="dv">' +
-        (v ? hi(v, terms) : '<span class="dnone">原表未填</span>') + '</div></div>';
+      return '<div class="dcell"><div class="dk">' + esc(T(k)) + '</div><div class="dv">' +
+        (v ? hi(v, terms) : '<span class="dnone">' + esc(T('notFilled')) + '</span>') + '</div></div>';
     }
     return '<tr class="detail" data-row="' + it.row + '"><td colspan="10"><div class="dwrap">' +
-      cell('管理推荐度备注', it.mgmtNote) +
-      cell('EGO 武器说明', it.weaponText) +
-      cell('EGO 防具说明', it.armorText) +
-      cell('镇压任务小评', it.suppressText) +
+      cell('dMgmt', it.mgmtNote) +
+      cell('dWeapon', it.weaponText) +
+      cell('dArmor', it.armorText) +
+      cell('dSupp', it.suppressText) +
       '</div>' + wikiBlock(it) + '</td></tr>';
   }
 
   function renderTable(list, terms) {
     var sorted = sortedList(list);
-    var head = ['编号', '异想体', '类型', '管理推荐度', 'EGO 武器', '攻击距离', '武器 DPS', 'EGO 防具', '抗性', '镇压'];
+    var c = T('col');
+    var head = [c.id, c.name, c.type, c.mgmt, c.wgrade, c.range, c.dps, c.agrade, c.res, c.supp];
     var rows = sorted.map(function (it) {
       var open = !!state.open[it.row];
-      var tp = it.type || it.danger;
       return '<tr class="row' + (open ? ' open' : '') + '" data-row="' + it.row + '" tabindex="0">' +
         '<td class="c-id"><span class="caret">▶</span>' + hi(it.id, terms) + '</td>' +
-        '<td class="c-name">' + hi(it.name, terms) + '</td>' +
-        '<td>' + bdg(tp === '工具型' ? 't-tool' : 'd-' + tp, tp) + '</td>' +
+        '<td class="c-name">' + hi(itemName(it), terms) + '</td>' +
+        '<td>' + typeBadge(it) + '</td>' +
         '<td>' + (it.mgmtGrade ? bdg('m-' + it.mgmtGrade, it.mgmtGrade) : '<span class="dim">—</span>') + '</td>' +
         '<td>' + weaponCell(it) + (it.weaponType ? ' <span class="rng">' + esc(it.weaponType) + '</span>' : '') + '</td>' +
-        '<td>' + (it.rangeLabel ? '<span class="rng">' + esc(it.rangeLabel) + (it.rangeValue !== null ? '(' + it.rangeValue + ')' : '') + '</span>' : '<span class="dim">—</span>') + '</td>' +
+        '<td>' + (it.rangeLabel ? '<span class="rng">' + esc(TV(it.rangeLabel)) + (it.rangeValue !== null ? '(' + it.rangeValue + ')' : '') + '</span>' : '<span class="dim">—</span>') + '</td>' +
         '<td class="c-dps">' + dpsCell(it) + '</td>' +
         '<td>' + armorCell(it) + '</td>' +
         '<td class="c-res">' + resistCell(it) + '</td>' +
-        '<td>' + bdg('s-' + (it.suppressGrade === '不会突破收容' || it.suppressGrade === '可镇压' ? '未填' : it.suppressGrade),
-          it.suppressGrade) + '</td>' +
+        '<td>' + suppBadge(it) + '</td>' +
         '</tr>' + (open ? detailHTML(it, terms) : '');
     }).join('');
 
@@ -344,31 +350,35 @@
       }).join('') + '</tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
+  function suppBadge(it) {
+    var s = it.suppressGrade;
+    return bdg('s-' + (s === '不会突破收容' || s === '可镇压' ? '未填' : s), s);
+  }
+
   function renderCards(list, terms) {
     return '<div class="cards">' + list.map(function (it) {
       function row(k, v, cls) {
         return '<div class="crow"><div class="ck">' + esc(k) + '</div><div class="cv' + (cls ? ' ' + cls : '') + '">' +
           (v || '<span class="dim">—</span>') + '</div></div>';
       }
-      var tp = it.type || it.danger;
       return '<div class="card" data-row="' + it.row + '">' +
-        '<div class="card-h"><span class="cid">' + hi(it.id, terms) + '</span><h3>' + hi(it.name, terms) + '</h3>' +
-        bdg(tp === '工具型' ? 't-tool' : 'd-' + tp, tp) + '</div>' +
+        '<div class="card-h"><span class="cid">' + hi(it.id, terms) + '</span><h3>' + hi(itemName(it), terms) + '</h3>' +
+        typeBadge(it) + '</div>' +
         '<div class="card-tags">' +
-        (it.mgmtGrade ? bdg('m-' + it.mgmtGrade, '管理 ' + it.mgmtGrade) : '') +
+        (it.mgmtGrade ? bdg('m-' + it.mgmtGrade, 'Mgmt ' + TV(it.mgmtGrade)) : '') +
         weaponCell(it) + (it.weaponType ? ' <span class="rng">' + esc(it.weaponType) + '</span>' : '') +
-        (it.rangeLabel ? '<span class="rng">' + esc(it.rangeLabel) + (it.rangeValue !== null ? '(' + it.rangeValue + ')' : '') + '</span>' : '') +
-        armorCell(it) + bdg('s-' + (it.suppressGrade === '不会突破收容' || it.suppressGrade === '可镇压' ? '未填' : it.suppressGrade), '镇压 ' + it.suppressGrade) +
-        (it.dmgType ? '<span class="rng">伤 ' + esc(it.dmgType) + '</span>' : '') +
+        (it.rangeLabel ? '<span class="rng">' + esc(TV(it.rangeLabel)) + (it.rangeValue !== null ? '(' + it.rangeValue + ')' : '') + '</span>' : '') +
+        armorCell(it) + suppBadge(it) +
+        (it.dmgType ? '<span class="rng">' + esc(TV('伤')) + ' ' + esc(TV(it.dmgType)) + '</span>' : '') +
         '</div>' +
         '<div class="card-rows">' +
         row('DPS', it.weaponDps === null ? '' : '<b>' + num(it.weaponDps) + '</b>' +
-          (it.weaponDpsMax !== null ? ' <span class="dim">(可达 ' + num(it.weaponDpsMax) + ')</span>' : '') +
+          (it.weaponDpsMax !== null ? ' <span class="dim">(max ' + num(it.weaponDpsMax) + ')</span>' : '') +
           (it.weaponTail ? ' <span class="dim">' + esc(it.weaponTail) + '</span>' : '')) +
-        row('管理备注', it.mgmtNote ? hi(it.mgmtNote, terms) : '') +
-        row('武器说明', it.weaponText ? hi(it.weaponText, terms) : '', 'notes') +
-        row('防具说明', it.armorText ? hi(it.armorText, terms) : '', 'notes') +
-        row('镇压小评', it.suppressText ? hi(it.suppressText, terms) : '', 'notes') +
+        row(T('dMgmt'), it.mgmtNote ? hi(it.mgmtNote, terms) : '') +
+        row(T('dWeapon'), it.weaponText ? hi(it.weaponText, terms) : '', 'notes') +
+        row(T('dArmor'), it.armorText ? hi(it.armorText, terms) : '', 'notes') +
+        row(T('dSupp'), it.suppressText ? hi(it.suppressText, terms) : '', 'notes') +
         '</div>' + wikiBlock(it) + '</div>';
     }).join('') + '</div>';
   }
@@ -377,7 +387,8 @@
   function render() {
     var terms = state.q.split(/\s+/).filter(Boolean);
     var list = ITEMS.filter(match);
-    $('#stat').innerHTML = '<b>' + list.length + '</b> / ' + ITEMS.length + ' 条';
+    $('#stat').innerHTML = '<b>' + list.length + '</b> / ' + ITEMS.length +
+      '<span class="dim"> ' + esc(T('statTail')) + '</span>';
     $('#empty').hidden = list.length > 0;
     $('#result').innerHTML = list.length
       ? (state.mode === 'table' ? renderTable(list, terms) : renderCards(list, terms))
@@ -446,7 +457,7 @@
   function syncSortUI() {
     var cur = null;
     for (var i = 0; i < SORT_FIELDS.length; i++) if (SORT_FIELDS[i].v === state.sort) cur = SORT_FIELDS[i];
-    $('#srtVal').textContent = cur ? cur.label : '原表顺序';
+    $('#srtVal').textContent = cur ? T(cur.label) : T('s.row');
     $('#srtArrow').textContent = state.dir === 'desc' ? '▼' : '▲';
     $('#srtArrow').classList.toggle('desc', state.dir === 'desc');
     $$('#srtMenu .srt-i').forEach(function (b) {
@@ -459,7 +470,7 @@
   function renderSortMenu() {
     $('#srtMenu').innerHTML = SORT_FIELDS.map(function (f) {
       return '<button type="button" class="srt-i" role="option" data-v="' + f.v + '">' +
-        esc(f.label) + '<span class="srt-i-a"></span></button>';
+        esc(T(f.label)) + '<span class="srt-i-a"></span></button>';
     }).join('');
   }
 
@@ -547,27 +558,31 @@
     var times = per > 0 ? target / per : NaN;
 
     var fx = [
-      { k: CALC.labels.healthOut || '期望健康输出值', v: num(CALC.healthOut) },
-      { k: CALC.labels.tech || '培训部系数', v: num(techK) },
-      { k: CALC.labels.coef || '工作系数', v: num(coef) },
-      { k: CALC.labels.pebox || '期望 PE-BOX 数', v: pebox }
+      { k: T('fxHealth'), v: num(CALC.healthOut) },
+      { k: T('fxTech'), v: num(techK) },
+      { k: T('fxCoef'), v: num(coef) },
+      { k: T('fxPebox'), v: pebox }
     ];
     $('#formula').innerHTML = fx.map(function (f, i) {
       return (i ? '<div class="fx-op">×</div>' : '') +
         '<div class="fx"><div class="fx-k">' + esc(f.k) + '</div><div class="fx-v">' + esc(f.v) + '</div></div>';
     }).join('') + '<div class="fx-op">=</div>' +
       '<div class="fx" style="flex:1 1 120px;border-color:rgba(224,164,74,.35);background:rgba(224,164,74,.08)">' +
-      '<div class="fx-k">单次期望加成</div><div class="fx-v" style="color:#e5b85c">' + num(per, 3) + '</div></div>';
+      '<div class="fx-k">' + esc(T('resPerShort')) + '</div><div class="fx-v" style="color:#e5b85c">' + num(per, 3) + '</div></div>';
 
     $('#rPer').textContent = num(per, 3);
-    $('#rCntK').textContent = '提升 ' + target + ' 点属性需要工作';
+    $('#rCntK').textContent = interp(T('resCnt'), { n: target });
     $('#rCnt').textContent = isNaN(times) ? '—' : num(times, 2);
-    $('#calcNote').innerHTML =
-      '工作系数 ' + num(coef) + ' 来自上表「' + esc(QUALS.indexOf(qual) + 1) + ' 级品质 × ' + esc(lvl) +
-      '」交叉格；PE-BOX 数按异想体等级取 ' + pebox + '（ZAYIN 7 / TETH 8 / HE 12 / WAW 16 / ALEPH 23）。<br>' +
-      '本估算用的是期望值，实际单次工作会有偏差，只适合做加班量的量级参考。';
+    $('#calcNote').innerHTML = state_lang === 'en'
+      ? 'Coefficient ' + num(coef) + ' comes from the "' + esc(QUALS.indexOf(qual) + 1) +
+        ' quality × ' + esc(lvl) + '" cell above; PE-BOX count is ' + pebox +
+        ' by abnormality level (ZAYIN 7 / TETH 8 / HE 12 / WAW 16 / ALEPH 23).<br>' +
+        'This uses expected values, so a single work will vary. Use it for order-of-magnitude planning only.'
+      : '工作系数 ' + num(coef) + ' 来自上表「' + esc(QUALS.indexOf(qual) + 1) + ' 级品质 × ' + esc(lvl) +
+        '」交叉格；PE-BOX 数按异想体等级取 ' + pebox + '（ZAYIN 7 / TETH 8 / HE 12 / WAW 16 / ALEPH 23）。<br>' +
+        '本估算用的是期望值，实际单次工作会有偏差，只适合做加班量的量级参考。';
 
-    var mx = '<thead><tr><th>品质 ＼ 等级</th>' +
+    var mx = '<thead><tr><th>' + esc(T('mxHead')) + '</th>' +
       C.danger.map(function (d) { return '<th>' + esc(d) + '</th>'; }).join('') + '</tr></thead><tbody>';
     QUALS.forEach(function (q) {
       mx += '<tr><th>' + esc(q) + '</th>' + C.danger.map(function (d) {
@@ -578,31 +593,20 @@
     $('#mx').innerHTML = mx + '</tbody>';
 
     $('#techNote').innerHTML = tech
-      ? '已开启：培训部系数按 <code>1.5</code> 计算（原表公式 <code>IF(B6=TRUE,1.5,1)</code>）。'
-      : '未开启：培训部系数按 <code>1</code> 计算。';
+      ? interp(T('techOn'), {}) : T('techOff');
   }
 
   /* ====================================================== 说明页 */
   function renderHelp() {
-    var doc = [
-      ['异想体编号', 'A 列', '原表编号，含单位代号前缀（F / O / T / D）。最后一条「秃头-真是-太棒啦!」是特例，没有标准编号格式。'],
-      ['异想体名称', 'B 列', '直接取原表，未做任何替换。'],
-      ['类型', 'C 列 + wiki', '共六类：ZAYIN / TETH / HE / WAW / ALEPH，以及与危险等级并列的「工具型」。17 条工具型取自 wiki 的分类:工具异想体，不参与等级筛选；它们各自的危险等级仍是真实数据，展开详情里能看到。'],
-      ['工具类别（wiki）', 'wiki Abn Infobox', '工具型专有，标明使用方式：持续使用型（channel）／携带型（equip）／单次使用型（single）。工具型没有 EGO 武器与防具，所以武器、防具两列显示为 —。'],
-      ['管理推荐度', 'D 列', '取该格出现的最高一档推荐度作为标签；像「有拟态前：低／有拟态后：中」这种分情况的，会同时归入低和中两个筛选项。'],
-      ['EGO 武器推荐度', 'E 列', '标签为该格出现的最高档（极优 > 优 > 良 > 差 > 极差）；括号里的字母是武器等级，【】里是攻击距离与数值。'],
-      ['攻击距离', 'E 列【】', '极近 / 近 / 短 / 一般 / 远 / 极远，同时保留括号中的数值用于排序。'],
-      ['武器 DPS', 'E 列备注', '从「DPS：8.0(10.4)」这类备注里取第一个数 8.0 用于排序与筛选；括号内的数作为可达值一并显示。工具型异想体原表写「-」，此处不参与 DPS 筛选。'],
-      ['EGO 防具推荐度', 'F 列', '同样取最高档标签，括号内字母为防具等级。像「收容白夜：极优(A)／不收容：良(A)」按极优归档。'],
-      ['抗性', 'F 列备注', '原表备注里的四个数值，按原顺序展示，最大值加高亮。原表没有标注这四个数分别对应哪种抗性，只在文字里写了「单红抗甲」「紫抗甲」「蓝抗甲」之类的说法，因此本页不替它指定颜色顺序。'],
-      ['镇压', 'G 列', '容易＝原表小评写「容易镇压」；较难＝写「不容易镇压」；可镇压＝原表留空，取自 wiki 镇压建议；不会突破收容＝原表留空，该异想体不会突破收容。镇压小评栏展示对应原文。']
-    ];
+    var doc = I18N[state_lang].doc || I18N.zh.doc;
+    $('#docHead').innerHTML = T('helpDocHead')
+      .map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('');
     $('#docBody').innerHTML = doc.map(function (r) {
       return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>';
     }).join('');
 
     var lg = D.meta.legends || {};
-    var names = { D: '管理推荐度', E: 'EGO 武器推荐度', F: 'EGO 防具推荐度' };
+    var names = { D: T('g.mgmt'), E: T('g.wgrade'), F: T('g.agrade') };
     $('#legend').innerHTML = ['D', 'E', 'F'].map(function (k) {
       return '<div class="lg"><h4>' + esc(names[k]) + '</h4><p>' + nl(lg[k] || '') + '</p></div>';
     }).join('');
@@ -610,30 +614,65 @@
     $('#notice').innerHTML = nl(CALC.notice);
   }
 
-  /* ====================================================== 启动 */
-  function init() {
-    $('#brandSub').innerHTML = '共 <b>' + ITEMS.length + '</b> 条收录 · 数据来自原表 <code>异想体推荐表</code>';
-    $('#footCount').textContent = ITEMS.length;
-    var src = D.meta.source || {};
-    $('#footAuthor').textContent = src.author || '未署名';
-    if (src.sheet) { $('#footSheet').href = src.sheet; $('#footSheet').textContent = '原表链接'; }
-    if (src.wiki) { $('#footWiki').href = src.wiki; $('#footWiki').textContent = 'Lobotomy Corp 中文 wiki'; }
+  /* ====================================================== 语言切换 */
+  function applyLang(lang) {
+    state_lang = (lang === 'en') ? 'en' : 'zh';
+    try { localStorage.setItem('lobo-lang', state_lang); } catch (e) { /* 无痕模式忽略 */ }
 
-    fillSelect($('#qual'), QUALS, 'Ⅳ');
-    fillSelect($('#lvl'), C.danger, 'ALEPH');
-    fillSelect($('#target'), CALC.targets, String(CALC.targetDefault));
+    document.documentElement.lang = state_lang === 'en' ? 'en' : 'zh-CN';
+    document.title = T('docTitle');
+    var md = document.querySelector('meta[name="description"]');
+    if (md) md.setAttribute('content', T('docDesc'));
+
+    $$('[data-i18n]').forEach(function (el) { el.textContent = T(el.dataset.i18n); });
+    $$('[data-i18n-ph]').forEach(function (el) { el.placeholder = T(el.dataset.i18nPh); });
+    $$('[data-i18n-attr]').forEach(function (el) {
+      var parts = el.dataset.i18nAttr.split(':');
+      el.setAttribute(parts[0], T(parts[1]));
+    });
+    $$('.lang-b').forEach(function (b) {
+      b.classList.toggle('is-on', b.dataset.lang === state_lang);
+    });
+
+    $('#brandSub').innerHTML = esc(interp(T('sub'), { n: ITEMS.length })) +
+      ' <code>' + esc(state_lang === 'en' ? '异想体推荐表' : '异想体推荐表') + '</code>';
+    // 页脚：直接拼 HTML，避免「先转义再替换标签」把标签当文本输出
+    $('#foot2').innerHTML = esc(T('foot2').split('{n}')[0]) +
+      '<b>' + ITEMS.length + '</b>' + esc(T('foot2').split('{n}')[1] || '');
+    $('#foot3').innerHTML =
+      esc(T('foot3')) + '<b>' + esc(SRC.author || '—') + '</b>' +
+      esc(T('foot3b2')) +
+      ' <a id="footSheet" href="' + esc(SRC.sheet || '#') + '" target="_blank" rel="noopener">' +
+      esc(T('footSheet')) + '</a>' + esc(T('footSep')) +
+      ' <a id="footWiki" href="' + esc(SRC.wiki || '#') + '" target="_blank" rel="noopener">' +
+      esc(T('footWiki')) + '</a>.';
 
     renderSortMenu();
     syncSortUI();
-
-    ['#tech', '#qual', '#lvl', '#target'].forEach(function (s) {
-      $(s).addEventListener('change', renderCalc);
-    });
-
     renderFilters();
     render();
     renderCalc();
     renderHelp();
+  }
+
+  /* ====================================================== 启动 */
+  function init() {
+    fillSelect($('#qual'), QUALS, 'Ⅳ');
+    fillSelect($('#lvl'), C.danger, 'ALEPH');
+    fillSelect($('#target'), CALC.targets, String(CALC.targetDefault));
+
+    ['#tech', '#qual', '#lvl', '#target'].forEach(function (s) {
+      $(s).addEventListener('change', renderCalc);
+    });
+    $$('.lang-b').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (b.dataset.lang !== state_lang) applyLang(b.dataset.lang);
+      });
+    });
+
+    var saved = 'zh';
+    try { saved = localStorage.getItem('lobo-lang') || 'zh'; } catch (e) { /* 忽略 */ }
+    applyLang(saved);
   }
 
   init();

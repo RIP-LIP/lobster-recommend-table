@@ -72,6 +72,22 @@ b{font-weight:650}
 .tab:hover{color:var(--fg)}
 .tab.is-on{background:var(--panel2);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.4)}
 
+/* 语言切换：放在页眉右上角，与标签页同一视觉层级 */
+.lang{
+  display:flex;gap:2px;margin-left:10px;flex:none;
+  background:var(--bg2);padding:3px;border-radius:8px;border:1px solid var(--line);
+}
+.lang-b{
+  appearance:none;border:0;background:transparent;color:var(--mute);
+  font:inherit;font-size:12.5px;letter-spacing:.3px;
+  padding:5px 11px;border-radius:5px;cursor:pointer;transition:background .14s,color .14s;
+}
+.lang-b:hover{color:var(--fg)}
+.lang-b.is-on{
+  background:linear-gradient(180deg,rgba(224,164,74,.22),rgba(224,164,74,.12));
+  color:#f0c37c;box-shadow:inset 0 0 0 1px rgba(224,164,74,.35);
+}
+
 /* ============================================================ 版心 */
 main{max-width:1400px;margin:0 auto;padding:20px 22px 60px}
 .view{display:none;animation:fade .18s ease}
@@ -403,6 +419,10 @@ table.doc td:last-child{color:var(--dim);line-height:1.65;white-space:pre-wrap}
   .top-inner{padding:12px 16px;gap:12px}
   .tabs{margin-left:0;width:100%}
   .tab{flex:1;text-align:center;padding:7px 8px}
+  .lang{margin-left:auto}
+  .brand{order:1}
+  .tabs{order:3;width:100%}
+  .lang{order:2}
   main{padding:16px 16px 50px}
   .brand h1{font-size:15.5px;white-space:normal}
   .sub{white-space:normal}

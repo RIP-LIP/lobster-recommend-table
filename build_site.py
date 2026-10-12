@@ -17,7 +17,7 @@ import openpyxl
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(BASE, "source.xlsx")
-OUT = os.path.join(BASE, "site")
+OUT = os.path.join(BASE, "docs")   # GitHub Pages 只认 /docs 或根目录，统一放这里
 
 DANGER = ["ZAYIN", "TETH", "HE", "WAW", "ALEPH"]
 MGMT = ["论外", "高", "中", "低", "极低"]
@@ -39,6 +39,7 @@ SOURCE = {
 }
 
 WIKI_FILE = "wiki_data.json"
+EN_FILE = "wiki_en_names.json"
 
 
 
@@ -261,6 +262,23 @@ def parse_calc(ws):
     }
 
 
+def merge_en_names(items):
+    """并入英文名。英文站 infobox 的编号拆成 sn_source/sn_class/sn_id 三段，
+    已由 wiki_en_names.json 按编号对齐；缺名的回落到中文名。"""
+    path = os.path.join(BASE, EN_FILE)
+    if not os.path.exists(path):
+        print("  (无 %s，跳过英文名；先跑 python wiki_fetch.py)" % EN_FILE)
+        return
+    en = json.load(open(path, encoding="utf-8"))
+    n = 0
+    for it in items:
+        rec = en.get(it["id"].upper())
+        it["nameEn"] = (rec or {}).get("name") or it["name"]
+        if rec:
+            n += 1
+    print("  英文名并入 %d / %d 条" % (n, len(items)))
+
+
 def main():
     wb = openpyxl.load_workbook(SRC, data_only=True)
     ws = wb["异想体推荐表"]
@@ -268,6 +286,7 @@ def main():
     items = [build_item(x) for x in records]
     calc = parse_calc(wb["加班计算器"])
     merge_wiki(items)
+    merge_en_names(items)
 
     data = {
         "meta": {

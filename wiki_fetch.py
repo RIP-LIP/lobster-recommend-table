@@ -45,7 +45,7 @@ def api(params, tries=3):
 
 def load_items():
     """从已生成的 data.js 里取异想体列表，避免重复解析 xlsx。"""
-    src = open(os.path.join(BASE, "site", "data.js"), encoding="utf-8").read()
+    src = open(os.path.join(BASE, "docs", "data.js"), encoding="utf-8").read()
     return json.loads(src[src.index("{"):src.rindex("}") + 1])["items"]
 
 

@@ -1,0 +1,422 @@
+{
+ "F-01-02": {
+  "name": "Scorched Girl",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-03-03": {
+  "name": "One Sin and Hundreds of Good Deeds",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-01-04": {
+  "name": "The Queen of Hatred",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "T-04-06": {
+  "name": "Happy Teddy Bear",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-04-08": {
+  "name": "The Red Shoes",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "T-09-09": {
+  "name": "Theresia",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-01-12": {
+  "name": "Old Lady",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-01-15": {
+  "name": "Nameless Fetus",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "F-01-18": {
+  "name": "The Lady Facing the Wall",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-06-20": {
+  "name": "Nothing There",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "T-06-27": {
+  "name": "1.76 MHz",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-05-30": {
+  "name": "Singing Machine",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-01-31": {
+  "name": "The Silent Orchestra",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "F-05-32": {
+  "name": "Warm-hearted Woodsman",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "F-01-37": {
+  "name": "The Snow Queen",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-02-40": {
+  "name": "Big Bird",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "T-05-41": {
+  "name": "All-Around Helper",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "F-04-42": {
+  "name": "Snow White's Apple",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "T-02-43": {
+  "name": "Spider Bud",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "F-02-44": {
+  "name": "Beauty and the Beast",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-01-45": {
+  "name": "Plague Doctor",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-03-46": {
+  "name": "WhiteNight",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "O-05-47": {
+  "name": "Don't Touch Me",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "F-02-49": {
+  "name": "Rudolta of the Sleigh",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "T-04-50": {
+  "name": "Queen Bee",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-05-51": {
+  "name": "Bloodbath",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "F-05-52": {
+  "name": "Opened Can of WellCheers",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-04-53": {
+  "name": "Alriune",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "T-01-54": {
+  "name": "Forsaken Murderer",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-01-55": {
+  "name": "Child of the Galaxy",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-02-56": {
+  "name": "Punishing Bird",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "F-01-57": {
+  "name": "Little Red Riding Hooded Mercenary",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "F-02-58": {
+  "name": "Big and Will be Bad Wolf",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-03-60": {
+  "name": "Fragment of the Universe",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-05-61": {
+  "name": "Crumbling Armor",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-02-62": {
+  "name": "Judgement Bird",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "O-02-63": {
+  "name": "Apocalypse Bird",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "O-01-64": {
+  "name": "The King of Greed",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-04-66": {
+  "name": "The Little Prince",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-01-67": {
+  "name": "Laetitia",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-01-68": {
+  "name": "The Funeral of the Dead Butterflies",
+  "breach": "yes}}",
+  "src": "en wiki infobox"
+ },
+ "F-01-69": {
+  "name": "Der Freischütz",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "F-02-70": {
+  "name": "Dream of a Black Swan",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "T-02-71": {
+  "name": "The Dreaming Current",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "O-04-72": {
+  "name": "The Burrowing Heaven",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "O-01-73": {
+  "name": "The Knight of Despair",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-02-74": {
+  "name": "The Naked Nest",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-01-75": {
+  "name": "Mountain of Smiling Bodies",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "O-05-76": {
+  "name": "Schadenfreude",
+  "breach": "yes}}",
+  "src": "en wiki infobox"
+ },
+ "T-09-77": {
+  "name": "The Heart of Aspiration",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-09-78": {
+  "name": "Notes from a Crazed Researcher",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-09-79": {
+  "name": "Flesh Idol",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-09-80": {
+  "name": "Giant Tree Sap",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-09-81": {
+  "name": "Mirror of Adjustment",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-09-82": {
+  "name": "Shelter from the 27th of March",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "F-04-83": {
+  "name": "Fairy Festival",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-04-84": {
+  "name": "Meat Lantern",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "T-09-85": {
+  "name": "We Can Change Anything",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-09-86": {
+  "name": "Express Train to Hell",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "F-01-87": {
+  "name": "Scarecrow Searching for Wisdom",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-03-88": {
+  "name": "Dimensional Refraction Variant",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-03-89": {
+  "name": "CENSORED",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "T-09-90": {
+  "name": "Skin Prophecy",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-09-91": {
+  "name": "Portrait of Another World",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-01-92": {
+  "name": "Today's Shy Look",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-03-93": {
+  "name": "Blue Star",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "T-09-94": {
+  "name": "You Must Be Happy",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-09-95": {
+  "name": "Luminous Bracelet",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-09-96": {
+  "name": "Behavior Adjustment",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "T-09-97": {
+  "name": "Old Faith and Promise",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-02-98": {
+  "name": "Porccubus",
+  "breach": "yes}}",
+  "src": "en wiki infobox"
+ },
+ "T-02-99": {
+  "name": "Void Dream",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "O-04-100": {
+  "name": "Grave of Cherry Blossoms",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "O-02-101": {
+  "name": "The Firebird",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "O-05-102": {
+  "name": "Yin",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "O-07-103": {
+  "name": "Yang",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "D-09-104": {
+  "name": "Backward Clock",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "D-01-105": {
+  "name": "Il Pianto della Luna",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "D-01-106": {
+  "name": "Army in Black",
+  "breach": "Yes",
+  "src": "en wiki infobox"
+ },
+ "D-02-107": {
+  "name": "Ppodae",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "D-04-108": {
+  "name": "Parasite Tree",
+  "breach": null,
+  "src": "en wiki infobox"
+ },
+ "D-03-109": {
+  "name": "Melting Love",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "D-01-110": {
+  "name": "Clouded Monk",
+  "breach": "yes",
+  "src": "en wiki infobox"
+ },
+ "秃头-真是-太棒啦!": {
+  "name": "You're Bald...",
+  "breach": null,
+  "src": "zh/en 导航模板对照"
+ }
+}

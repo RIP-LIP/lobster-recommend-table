@@ -179,7 +179,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "2",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Scorched Girl"
   },
   {
    "row": 5,
@@ -330,7 +331,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "X",
    "isTool": false,
-   "type": "ZAYIN"
+   "type": "ZAYIN",
+   "nameEn": "One Sin and Hundreds of Good Deeds"
   },
   {
    "row": 7,
@@ -481,7 +483,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "2",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "The Queen of Hatred"
   },
   {
    "row": 9,
@@ -632,7 +635,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "X",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Happy Teddy Bear"
   },
   {
    "row": 11,
@@ -783,7 +787,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "1",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "The Red Shoes"
   },
   {
    "row": 13,
@@ -863,7 +868,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Theresia"
   },
   {
    "row": 15,
@@ -1015,7 +1021,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "4",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Old Lady"
   },
   {
    "row": 17,
@@ -1166,7 +1173,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "1",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Nameless Fetus"
   },
   {
    "row": 19,
@@ -1317,7 +1325,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "2",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "The Lady Facing the Wall"
   },
   {
    "row": 21,
@@ -1468,7 +1477,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "1",
    "isTool": false,
-   "type": "ALEPH"
+   "type": "ALEPH",
+   "nameEn": "Nothing There"
   },
   {
    "row": 23,
@@ -1615,7 +1625,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "4",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "1.76 MHz"
   },
   {
    "row": 25,
@@ -1757,7 +1768,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "1",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Singing Machine"
   },
   {
    "row": 27,
@@ -1908,7 +1920,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "2",
    "isTool": false,
-   "type": "ALEPH"
+   "type": "ALEPH",
+   "nameEn": "The Silent Orchestra"
   },
   {
    "row": 29,
@@ -2059,7 +2072,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "1",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Warm-hearted Woodsman"
   },
   {
    "row": 31,
@@ -2210,7 +2224,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "X",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "The Snow Queen"
   },
   {
    "row": 33,
@@ -2361,7 +2376,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "5",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Big Bird"
   },
   {
    "row": 35,
@@ -2512,7 +2528,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "2",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "All-Around Helper"
   },
   {
    "row": 37,
@@ -2664,7 +2681,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "1",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Snow White's Apple"
   },
   {
    "row": 39,
@@ -2815,7 +2833,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "X",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Spider Bud"
   },
   {
    "row": 41,
@@ -2966,7 +2985,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "X",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Beauty and the Beast"
   },
   {
    "row": 43,
@@ -3113,7 +3133,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "1",
    "isTool": false,
-   "type": "ZAYIN"
+   "type": "ZAYIN",
+   "nameEn": "Plague Doctor"
   },
   {
    "row": 45,
@@ -3254,7 +3275,8 @@ window.LOBO = {
    "dmgType": "淡",
    "counter": "3",
    "isTool": false,
-   "type": "ALEPH"
+   "type": "ALEPH",
+   "nameEn": "WhiteNight"
   },
   {
    "row": 47,
@@ -3392,7 +3414,8 @@ window.LOBO = {
    "dmgType": "未知",
    "counter": "X",
    "isTool": false,
-   "type": "ZAYIN"
+   "type": "ZAYIN",
+   "nameEn": "Don't Touch Me"
   },
   {
    "row": 49,
@@ -3543,7 +3566,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "2",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Rudolta of the Sleigh"
   },
   {
    "row": 51,
@@ -3695,7 +3719,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "1",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Queen Bee"
   },
   {
    "row": 53,
@@ -3846,7 +3871,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "X",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Bloodbath"
   },
   {
    "row": 55,
@@ -3997,7 +4023,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "X",
    "isTool": false,
-   "type": "ZAYIN"
+   "type": "ZAYIN",
+   "nameEn": "Opened Can of WellCheers"
   },
   {
    "row": 57,
@@ -4148,7 +4175,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "1",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Alriune"
   },
   {
    "row": 59,
@@ -4299,7 +4327,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "1",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Forsaken Murderer"
   },
   {
    "row": 61,
@@ -4450,7 +4479,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "5",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Child of the Galaxy"
   },
   {
    "row": 63,
@@ -4601,7 +4631,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "4",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Punishing Bird"
   },
   {
    "row": 65,
@@ -4753,7 +4784,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "3",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Little Red Riding Hooded Mercenary"
   },
   {
    "row": 67,
@@ -4904,7 +4936,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "2",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Big and Will be Bad Wolf"
   },
   {
    "row": 69,
@@ -5055,7 +5088,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "2",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Fragment of the Universe"
   },
   {
    "row": 71,
@@ -5206,7 +5240,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "X",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Crumbling Armor"
   },
   {
    "row": 73,
@@ -5358,7 +5393,8 @@ window.LOBO = {
    "dmgType": "淡",
    "counter": "2",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Judgement Bird"
   },
   {
    "row": 75,
@@ -5451,7 +5487,8 @@ window.LOBO = {
    "dmgType": "未知",
    "counter": "0",
    "isTool": false,
-   "type": "ALEPH"
+   "type": "ALEPH",
+   "nameEn": "Apocalypse Bird"
   },
   {
    "row": 77,
@@ -5602,7 +5639,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "1",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "The King of Greed"
   },
   {
    "row": 79,
@@ -5753,7 +5791,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "2",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "The Little Prince"
   },
   {
    "row": 81,
@@ -5905,7 +5944,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "X",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Laetitia"
   },
   {
    "row": 83,
@@ -6056,7 +6096,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "2",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "The Funeral of the Dead Butterflies"
   },
   {
    "row": 85,
@@ -6207,7 +6248,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "3",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Der Freischütz"
   },
   {
    "row": 87,
@@ -6358,7 +6400,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "5",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Dream of a Black Swan"
   },
   {
    "row": 89,
@@ -6509,7 +6552,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "2",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "The Dreaming Current"
   },
   {
    "row": 91,
@@ -6660,7 +6704,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "3",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "The Burrowing Heaven"
   },
   {
    "row": 93,
@@ -6811,7 +6856,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "X",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "The Knight of Despair"
   },
   {
    "row": 95,
@@ -6962,7 +7008,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "X",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "The Naked Nest"
   },
   {
    "row": 97,
@@ -7113,7 +7160,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "2",
    "isTool": false,
-   "type": "ALEPH"
+   "type": "ALEPH",
+   "nameEn": "Mountain of Smiling Bodies"
   },
   {
    "row": 99,
@@ -7264,7 +7312,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "2",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Schadenfreude"
   },
   {
    "row": 101,
@@ -7344,7 +7393,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "The Heart of Aspiration"
   },
   {
    "row": 103,
@@ -7425,7 +7475,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Notes from a Crazed Researcher"
   },
   {
    "row": 105,
@@ -7505,7 +7556,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Flesh Idol"
   },
   {
    "row": 107,
@@ -7585,7 +7637,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Giant Tree Sap"
   },
   {
    "row": 109,
@@ -7665,7 +7718,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Mirror of Adjustment"
   },
   {
    "row": 111,
@@ -7745,7 +7799,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Shelter from the 27th of March"
   },
   {
    "row": 113,
@@ -7896,7 +7951,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "X",
    "isTool": false,
-   "type": "ZAYIN"
+   "type": "ZAYIN",
+   "nameEn": "Fairy Festival"
   },
   {
    "row": 115,
@@ -8047,7 +8103,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "1",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Meat Lantern"
   },
   {
    "row": 117,
@@ -8127,7 +8184,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "We Can Change Anything"
   },
   {
    "row": 119,
@@ -8207,7 +8265,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Express Train to Hell"
   },
   {
    "row": 121,
@@ -8358,7 +8417,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "1",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Scarecrow Searching for Wisdom"
   },
   {
    "row": 123,
@@ -8500,7 +8560,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "2",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Dimensional Refraction Variant"
   },
   {
    "row": 125,
@@ -8642,7 +8703,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "2",
    "isTool": false,
-   "type": "ALEPH"
+   "type": "ALEPH",
+   "nameEn": "CENSORED"
   },
   {
    "row": 127,
@@ -8722,7 +8784,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Skin Prophecy"
   },
   {
    "row": 129,
@@ -8802,7 +8865,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Portrait of Another World"
   },
   {
    "row": 131,
@@ -8953,7 +9017,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "X",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Today's Shy Look"
   },
   {
    "row": 133,
@@ -9104,7 +9169,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "2",
    "isTool": false,
-   "type": "ALEPH"
+   "type": "ALEPH",
+   "nameEn": "Blue Star"
   },
   {
    "row": 135,
@@ -9184,7 +9250,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "You Must Be Happy"
   },
   {
    "row": 137,
@@ -9264,7 +9331,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Luminous Bracelet"
   },
   {
    "row": 139,
@@ -9344,7 +9412,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Behavior Adjustment"
   },
   {
    "row": 141,
@@ -9424,7 +9493,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Old Faith and Promise"
   },
   {
    "row": 143,
@@ -9577,7 +9647,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "2",
    "isTool": false,
-   "type": "HE"
+   "type": "HE",
+   "nameEn": "Porccubus"
   },
   {
    "row": 145,
@@ -9728,7 +9799,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "2",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Void Dream"
   },
   {
    "row": 147,
@@ -9880,7 +9952,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "3",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Grave of Cherry Blossoms"
   },
   {
    "row": 149,
@@ -10031,7 +10104,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "3",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "The Firebird"
   },
   {
    "row": 151,
@@ -10182,7 +10256,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "2",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Yin"
   },
   {
    "row": 153,
@@ -10262,7 +10337,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Yang"
   },
   {
    "row": 155,
@@ -10342,7 +10418,8 @@ window.LOBO = {
    "dmgType": null,
    "counter": null,
    "isTool": true,
-   "type": "工具型"
+   "type": "工具型",
+   "nameEn": "Backward Clock"
   },
   {
    "row": 157,
@@ -10493,7 +10570,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "3",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Il Pianto della Luna"
   },
   {
    "row": 159,
@@ -10645,7 +10723,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "3",
    "isTool": false,
-   "type": "ZAYIN"
+   "type": "ZAYIN",
+   "nameEn": "Army in Black"
   },
   {
    "row": 161,
@@ -10796,7 +10875,8 @@ window.LOBO = {
    "dmgType": "红",
    "counter": "2",
    "isTool": false,
-   "type": "TETH"
+   "type": "TETH",
+   "nameEn": "Ppodae"
   },
   {
    "row": 163,
@@ -10948,7 +11028,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "1",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Parasite Tree"
   },
   {
    "row": 165,
@@ -11100,7 +11181,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "3",
    "isTool": false,
-   "type": "ALEPH"
+   "type": "ALEPH",
+   "nameEn": "Melting Love"
   },
   {
    "row": 167,
@@ -11251,7 +11333,8 @@ window.LOBO = {
    "dmgType": "白",
    "counter": "3",
    "isTool": false,
-   "type": "WAW"
+   "type": "WAW",
+   "nameEn": "Clouded Monk"
   },
   {
    "row": 169,
@@ -11402,7 +11485,8 @@ window.LOBO = {
    "dmgType": "黑",
    "counter": "X",
    "isTool": false,
-   "type": "ZAYIN"
+   "type": "ZAYIN",
+   "nameEn": "You're Bald..."
   }
  ],
  "calc": {

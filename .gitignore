@@ -4,6 +4,8 @@ wiki_map.json
 wiki_raw.json
 wiki_data.json
 wiki_flags.json
+wiki_en_pages.json
+wiki_en_raw.json
 _*.txt
 
 __pycache__/
