@@ -606,12 +606,15 @@
     }).join('');
 
     var lg = D.meta.legends || {};
+    var lgEn = D.meta.legendsEn || {};
     var names = { D: T('g.mgmt'), E: T('g.wgrade'), F: T('g.agrade') };
     $('#legend').innerHTML = ['D', 'E', 'F'].map(function (k) {
-      return '<div class="lg"><h4>' + esc(names[k]) + '</h4><p>' + nl(lg[k] || '') + '</p></div>';
+      var txt = (state_lang === 'en' ? (lgEn[k] || lg[k] || '') : (lg[k] || ''));
+      return '<div class="lg"><h4>' + esc(names[k]) + '</h4><p>' + nl(txt) + '</p></div>';
     }).join('');
 
-    $('#notice').innerHTML = nl(CALC.notice);
+    $('#notice').innerHTML = nl(
+      state_lang === 'en' ? (D.meta.noticeEn || CALC.notice) : CALC.notice);
   }
 
   /* ====================================================== 语言切换 */

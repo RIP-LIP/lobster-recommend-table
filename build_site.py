@@ -41,6 +41,47 @@ SOURCE = {
 WIKI_FILE = "wiki_data.json"
 EN_FILE = "wiki_en_names.json"
 
+# 原表第 2 行三个批注 + 加班计算器 B2 使用须知的英译。
+# 中文原文照搬自单元格，不改动；英文为本页翻译，措辞按游戏内术语对齐
+# （白夜=WhiteNight、抬手速度=wind-up time、开发数量=已推出的护具款数）。
+LEGEND_EN = {
+    "D": (
+        "The Mgmt Rating states whether the facility should consider long-term "
+        "containment of this abnormality.\n\n"
+        "High — the abnormality helps the facility in some way and is cheap to manage.\n"
+        "Mid — harmless once you are past the mid-game.\n"
+        "Low — still demands focused attention late in the run.\n"
+        "Very Low — WhiteNight only; marked here as a warning to newcomers not to pick it."
+    ),
+    "E": (
+        "In weapon ratings, Good / Fair / Poor only compare within the same tier: "
+        "same tier, Good > Fair > Poor.\n"
+        "A higher tier outweighs the rating: Poor A > Good W, Poor W > Good H, Poor H > Good T.\n"
+        "Worst can usually be replaced by Good of the tier below, e.g. Good H > Worst W.\n"
+        "Excellent generally marks a weapon with some special utility.\n\n"
+        "For Z~H tier weapons, long attack range and a fast wind-up matter most.\n"
+        "For W and A tier weapons, special abilities and DPS matter most."
+    ),
+    "F": (
+        "Armor ratings are far less useful here than weapon ratings — "
+        "armor differs much less between items than weapons do.\n"
+        "Resistances are listed so you can pick by stat.\n"
+        "In general, the fewer armor items a department has released, the stronger they tend to be.\n\n"
+        "The author's full grading criteria are in the cell comment on that cell in the original sheet."
+    ),
+}
+
+NOTICE_EN = (
+    "Usage: this sheet roughly estimates the stat gain an employee gets from working on an "
+    "abnormality. Every red cell in the input area is editable (tech is a checkbox; quality and "
+    "abnormality level are dropdowns). Once they are filled in, it computes the expected stat "
+    "gain per work and how many works are needed to gain 20 stat points.\n\n"
+    "Caveat: many of the numbers are expected values, so actual results can differ a lot. "
+    "It is still fine as a rough guide for how much overtime a plan costs. "
+    "For the exact formulas see the Employees page on the wiki:\n"
+    "https://lobotomycorp.fandom.com/wiki/Employees"
+)
+
 
 
 def lines(v):
@@ -294,6 +335,8 @@ def main():
             "count": len(items),
             "builtAt": "",
             "legends": legends,
+            "legendsEn": LEGEND_EN,
+            "noticeEn": NOTICE_EN,
             "header": [ws.cell(1, i).value for i in range(1, 8)],
             "source": SOURCE,
         },

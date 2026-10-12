@@ -13,6 +13,12 @@ window.LOBO = {
    "E": "武器推荐中的优良差仅为同级中的比较，同级优>良>差。\n等级高于推荐度，差A>优W，差W>优H，差H>优T。\n极差一般可以被下位等级的优取代，比如优H>极差W。\n极优一般表示有一定功能性的武器。\n\nZ~H级武器主要推荐攻击距离远，抬手速度快的武器。\nW,A级武器主要考虑特殊能力和dps。",
    "F": "防具我这里参考价值并不高，\n护甲的差异也不像武器那么大，\n抗性标出来了，可以自行根据性选择，\n通常情况下，开发数量越少的护甲越强。\n\n我的具体分级标准可以点击本单元格查看批注\n"
   },
+  "legendsEn": {
+   "D": "The Mgmt Rating states whether the facility should consider long-term containment of this abnormality.\n\nHigh — the abnormality helps the facility in some way and is cheap to manage.\nMid — harmless once you are past the mid-game.\nLow — still demands focused attention late in the run.\nVery Low — WhiteNight only; marked here as a warning to newcomers not to pick it.",
+   "E": "In weapon ratings, Good / Fair / Poor only compare within the same tier: same tier, Good > Fair > Poor.\nA higher tier outweighs the rating: Poor A > Good W, Poor W > Good H, Poor H > Good T.\nWorst can usually be replaced by Good of the tier below, e.g. Good H > Worst W.\nExcellent generally marks a weapon with some special utility.\n\nFor Z~H tier weapons, long attack range and a fast wind-up matter most.\nFor W and A tier weapons, special abilities and DPS matter most.",
+   "F": "Armor ratings are far less useful here than weapon ratings — armor differs much less between items than weapons do.\nResistances are listed so you can pick by stat.\nIn general, the fewer armor items a department has released, the stronger they tend to be.\n\nThe author's full grading criteria are in the cell comment on that cell in the original sheet."
+  },
+  "noticeEn": "Usage: this sheet roughly estimates the stat gain an employee gets from working on an abnormality. Every red cell in the input area is editable (tech is a checkbox; quality and abnormality level are dropdowns). Once they are filled in, it computes the expected stat gain per work and how many works are needed to gain 20 stat points.\n\nCaveat: many of the numbers are expected values, so actual results can differ a lot. It is still fine as a rough guide for how much overtime a plan costs. For the exact formulas see the Employees page on the wiki:\nhttps://lobotomycorp.fandom.com/wiki/Employees",
   "header": [
    "异想体编号",
    "异想体名称",
